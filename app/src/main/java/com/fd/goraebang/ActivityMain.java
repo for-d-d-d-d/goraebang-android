@@ -34,13 +34,14 @@ public class ActivityMain extends CustomActivity {
 
     private TextView selectedTab, unSelectedTab;
     private TextView[] tabs = new TextView[5];
-    private final String[] TAB_NAME = {"News", "Square", "Univ", "Explore", "Me"};
+    private final String[] TAB_NAME = {"HOME", "SEARCH", "RECOMMEND", "MY LIST", "SETTING"};
     private final int[] TAB_ICONS = {
-            R.drawable.ic_home_black_24dp,
-            R.drawable.ic_search_black_24dp,
-            R.drawable.ic_favorite_border_black_24dp,
-            R.drawable.ic_reorder_black_24dp,
-            R.drawable.ic_settings_black_24dp};
+            R.drawable.ic_tab_home,
+            R.drawable.ic_tab_search,
+            R.drawable.ic_tab_recommand,
+            R.drawable.ic_tab_mylist,
+            R.drawable.ic_tab_settings
+    };
 
     private FragmentManager fm = null;
     private FragmentTransaction ft = null;

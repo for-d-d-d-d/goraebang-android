@@ -5,5 +5,5 @@
           android:id="@+id/tab"
           android:textColor="@color/gray"
           android:gravity="center"
-          android:drawablePadding="3dp"
-          android:textSize="10dp"/>
+          android:drawablePadding="5dp"
+          android:textSize="7dp"/>

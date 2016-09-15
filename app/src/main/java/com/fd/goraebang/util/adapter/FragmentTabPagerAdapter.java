@@ -1,5 +1,6 @@
 package com.fd.goraebang.util.adapter;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import java.util.ArrayList;

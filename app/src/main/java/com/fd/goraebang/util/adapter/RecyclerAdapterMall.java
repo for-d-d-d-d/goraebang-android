@@ -39,7 +39,7 @@ public class RecyclerAdapterMall extends RecyclerView.Adapter<RecyclerAdapterMal
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_item_recycler_mall, parent, false);
+                .inflate(R.layout.layout_item_recycler_product, parent, false);
         return new ViewHolder(view);
     }
 
