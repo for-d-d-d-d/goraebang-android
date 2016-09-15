@@ -7,6 +7,7 @@
     android:layout_height="@dimen/toolbar_height"
     android:minHeight="@dimen/toolbar_height"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    android:background="@color/colorPrimary"
     android:contentInsetStart="0dp"
     app:contentInsetStart="0dp">
 

@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fd.goraebang.custom.CustomActivity;
+import com.fd.goraebang.custom.CustomActivityWithToolbar;
 import com.fd.goraebang.main.FragmentHome;
 import com.fd.goraebang.main.FragmentMyList;
 import com.fd.goraebang.main.FragmentRecommend;
@@ -24,7 +24,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_main)
-public class ActivityMain extends CustomActivity {
+public class ActivityMain extends CustomActivityWithToolbar {
     @ViewById
     TabLayout tabLayout;
 
@@ -54,6 +54,8 @@ public class ActivityMain extends CustomActivity {
 
     @AfterViews
     void afterViews(){
+        setToolbar("고래방", 0, 0, 0, 0);
+
         tabLayout.setOnTabSelectedListener(new onTabSelectListener());
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
