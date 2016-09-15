@@ -6,11 +6,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-import com.kakao.auth.ApprovalType;
-import com.kakao.auth.AuthType;
-import com.kakao.auth.IApplicationConfig;
-import com.kakao.auth.ISessionConfig;
-import com.kakao.auth.KakaoAdapter;
+import com.crashlytics.android.Crashlytics;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.consts.URL;
 import com.fd.goraebang.interfaces.AccountService;
@@ -19,7 +15,13 @@ import com.fd.goraebang.interfaces.PostService;
 import com.fd.goraebang.interfaces.ProductService;
 import com.fd.goraebang.model.User;
 import com.fd.goraebang.util.helper.PrimitiveConverterFactory;
+import com.kakao.auth.ApprovalType;
+import com.kakao.auth.AuthType;
+import com.kakao.auth.IApplicationConfig;
+import com.kakao.auth.ISessionConfig;
+import com.kakao.auth.KakaoAdapter;
 
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -56,9 +58,10 @@ public class AppController extends Application {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         SCREEN_WIDTH = displayMetrics.widthPixels;
         SCREEN_HEIGHT = displayMetrics.heightPixels;
-    }
-    /*
         Fabric.with(this, new Crashlytics());
+    }
+
+    /*
         KakaoSDK.init(new KakaoSDKAdapter());
     }
 
