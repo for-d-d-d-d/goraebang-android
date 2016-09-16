@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
+import com.fd.goraebang.account.ActivityAccountLogin_;
 import com.fd.goraebang.custom.CustomActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -25,7 +26,7 @@ public class ActivityLaunchScreen extends CustomActivity {
             }
 
             public void onFinish() {
-                Intent intent = new Intent(ActivityLaunchScreen.this, ActivityMain_.class);
+                Intent intent = new Intent(ActivityLaunchScreen.this, ActivityAccountLogin_.class);
                 startActivity(intent);
                 finish();
             }

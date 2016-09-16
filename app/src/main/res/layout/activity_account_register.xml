@@ -1,227 +1,174 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/layout_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"/>
-
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/toolbar_height"
-        android:background="@color/white"
+        android:background="@color/dark_gray"
         android:fitsSystemWindows="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="22dp">
-            <!-- email -->
-            <TextView
-                android:textColor="@color/gray_2d"
-                android:layout_marginTop="10dp"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/ic_logo_transparent"
+                android:layout_gravity="center"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/soft_gray"/>
+
+            <EditText
+                android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="이메일"
-                android:textSize="@dimen/text_size_light"
-                style="@style/CustomFontBold"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="10dp">
-
-                <EditText
-                    android:id="@+id/etEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:singleLine="true"
-                    android:textColor="@color/gray_48"
-                    android:textSize="@dimen/text_size_light"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:hint="이메일을 입력해주세요."
-                    android:textColorHint="@color/gray_df"
-                    android:inputType="textEmailAddress"
-                    android:background="#00000000"
-                    style="@style/CustomFont"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.2dp"
-                    android:background="@color/gray_b5"
-                    android:layout_marginBottom="5dp"/>
-
-                <TextView
-                    android:id="@+id/tvMsgEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/text_size_small"/>
-            </LinearLayout>
-
-            <!-- nickname -->
-            <TextView
-                android:textColor="@color/gray_2d"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="닉네임"
-                android:textSize="@dimen/text_size_light"
-                style="@style/CustomFontBold"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="10dp">
-
-                <EditText
-                    android:id="@+id/etNickname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:singleLine="true"
-                    android:textColor="@color/gray_48"
-                    android:textSize="@dimen/text_size_light"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:hint="닉네임을 입력해주세요."
-                    android:textColorHint="@color/gray_df"
-                    android:background="#00000000"
-                    style="@style/CustomFont"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.2dp"
-                    android:background="@color/gray_b5"
-                    android:layout_marginBottom="5dp"/>
-
-                <TextView
-                    android:id="@+id/tvMsgNickname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/text_size_small"/>
-            </LinearLayout>
-
-            <!-- password -->
-            <TextView
-                android:textColor="@color/gray_2d"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="비밀번호"
-                android:textSize="@dimen/text_size_light"
-                style="@style/CustomFontBold"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="10dp">
-
-                <EditText
-                    android:id="@+id/etPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:password="true"
-                    android:singleLine="true"
-                    android:textColor="@color/gray_48"
-                    android:textSize="@dimen/text_size_light"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:hint="4자 이상 입력해주세요."
-                    android:textColorHint="@color/gray_df"
-                    android:background="#00000000"
-                    style="@style/CustomFont"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.2dp"
-                    android:background="@color/gray_b5"
-                    android:layout_marginBottom="5dp"/>
-
-                <TextView
-                    android:id="@+id/tvMsgPassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/text_size_small"/>
-            </LinearLayout>
-
-            <!-- password confirm-->
-            <TextView
-                android:textColor="@color/gray_2d"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="비밀번호 확인"
-                android:textSize="@dimen/text_size_light"
-                style="@style/CustomFontBold"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="10dp">
-
-                <EditText
-                    android:id="@+id/etPasswordConfirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionDone"
-                    android:password="true"
-                    android:singleLine="true"
-                    android:textColor="@color/gray_48"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:textSize="@dimen/text_size_light"
-                    android:hint="비밀번호를 한번 더 입력해주세요."
-                    android:textColorHint="@color/gray_df"
-                    android:background="#00000000"
-                    style="@style/CustomFont"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.2dp"
-                    android:background="@color/gray_b5"
-                    android:layout_marginBottom="5dp"/>
-
-                <TextView
-                    android:id="@+id/tvMsgPasswordConfirm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/text_size_small"/>
-            </LinearLayout>
-
-            <!-- login button -->
-            <Button
-                android:id="@+id/btnNext"
-                android:layout_width="match_parent"
-                android:layout_height="43dp"
-                android:background="@color/gray_c2"
-                android:onClick="onClick"
+                android:background="#00000000"
+                android:hint="Email"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
+                android:singleLine="true"
                 android:textColor="@color/white"
-                android:text="다음"
-                android:textSize="@dimen/text_size_bold"
-                style="@style/CustomFont"/>
-        </LinearLayout>
-    </ScrollView>
+                android:textColorHint="@color/soft_gray"
+                android:textSize="@dimen/text_size_light"/>
 
-    <include
-        layout="@layout/layout_popup_dialog"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/soft_gray"/>
+
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:hint="Password"
+                android:imeOptions="actionDone"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/soft_gray"
+                android:textSize="@dimen/text_size_light"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/soft_gray"/>
+
+
+            <EditText
+                android:id="@+id/etPasswordConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:hint="Password Confirm"
+                android:imeOptions="actionDone"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/soft_gray"
+                android:textSize="@dimen/text_size_light"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/soft_gray"/>
+
+            <Button
+                android:id="@+id/btnSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/colorPrimary"
+                android:onClick="onClick"
+                android:text="Login"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_bold"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/soft_gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnSocialFacebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:onClick="onClick"
+                    android:text="F"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_bold"/>
+
+                <Button
+                    android:id="@+id/btnSocialKakao"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:onClick="onClick"
+                    android:text="K"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_bold"/>
+
+                <Button
+                    android:id="@+id/btnSocialGoogle"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:onClick="onClick"
+                    android:text="G"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_bold"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"
+            android:onClick="onClick"
+            android:text="Already a member? Login"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_regular"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 </RelativeLayout>
