@@ -8,10 +8,10 @@ import com.fd.goraebang.custom.CustomFragment;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 
-@EFragment(R.layout.fragment_tab_mylist)
-public class FragmentMyList extends CustomFragment {
-    public static FragmentMyList newInstance() {
-        FragmentMyList f = new FragmentMyList_();
+@EFragment(R.layout.fragment_tab_mypage)
+public class FragmentMyPage extends CustomFragment {
+    public static FragmentMyPage newInstance() {
+        FragmentMyPage f = new FragmentMyPage_();
         return f;
     }
 

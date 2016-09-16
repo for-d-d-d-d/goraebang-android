@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.fd.goraebang.custom.CustomActivityWithToolbar;
 import com.fd.goraebang.main.FragmentHome;
-import com.fd.goraebang.main.FragmentMyList;
+import com.fd.goraebang.main.FragmentMyPage;
 import com.fd.goraebang.main.FragmentRecommend;
 import com.fd.goraebang.main.FragmentSearch;
 import com.fd.goraebang.main.FragmentSettings;
@@ -28,13 +28,13 @@ public class ActivityMain extends CustomActivityWithToolbar {
     @ViewById
     TabLayout tabLayout;
 
-    private Fragment fragmentHome, fragmentSearch, fragmentRecommend, fragmentMyList, fragmentSettings;
+    private Fragment fragmentHome, fragmentSearch, fragmentRecommend, fragmentMyPage, fragmentSettings;
     private int tabPosition = 0;
     private boolean exit;
 
     private TextView selectedTab, unSelectedTab;
     private TextView[] tabs = new TextView[5];
-    private final String[] TAB_NAME = {"HOME", "SEARCH", "RECOMMEND", "MY LIST", "SETTING"};
+    private final String[] TAB_NAME = {"HOME", "SEARCH", "RECOMMEND", "MY PAGE", "SETTING"};
     private final int[] TAB_ICONS = {
             R.drawable.ic_tab_home,
             R.drawable.ic_tab_search,
@@ -65,7 +65,7 @@ public class ActivityMain extends CustomActivityWithToolbar {
         fragmentHome = FragmentHome.newInstance();
         fragmentSearch = FragmentSearch.newInstance();
         fragmentRecommend = FragmentRecommend.newInstance();
-        fragmentMyList = FragmentMyList.newInstance();
+        fragmentMyPage = FragmentMyPage.newInstance();
         fragmentSettings = FragmentSettings.newInstance();
 
         for(int i = 0; i < 5; i++){
@@ -95,18 +95,23 @@ public class ActivityMain extends CustomActivityWithToolbar {
 
             switch(tabPosition){
                 case 0:
+                    setToolbar("고래방", 0, 0, 0, 0);
                     ft.replace(R.id.frLayout, fragmentHome);
                     break;
                 case 1:
+                    setToolbar("검색", 0, 0, 0, 0);
                     ft.replace(R.id.frLayout, fragmentSearch);
                     break;
                 case 2:
+                    setToolbar("추천", 0, 0, 0, 0);
                     ft.replace(R.id.frLayout, fragmentRecommend);
                     break;
                 case 3:
-                    ft.replace(R.id.frLayout, fragmentMyList);
+                    setToolbar("마이페이지", 0, 0, 0, 0);
+                    ft.replace(R.id.frLayout, fragmentMyPage);
                     break;
                 case 4:
+                    setToolbar("설정", 0, 0, 0, 0);
                     ft.replace(R.id.frLayout, fragmentSettings);
                     break;
             }
