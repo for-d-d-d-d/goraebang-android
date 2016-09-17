@@ -21,8 +21,6 @@ public class User implements Serializable {
     private String socialId;
     @JsonProperty("access_token")
     private String accessToken;
-    @JsonProperty("customs_number")
-    private String customsNumber;
 
     public int getId() {
         return id;
@@ -78,13 +76,5 @@ public class User implements Serializable {
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
-    }
-
-    public String getCustomsNumber() {
-        return customsNumber;
-    }
-
-    public void setCustomsNumber(String customsNumber) {
-        this.customsNumber = customsNumber;
     }
 }

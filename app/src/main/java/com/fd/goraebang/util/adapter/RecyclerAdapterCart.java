@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.fd.goraebang.R;
-import com.fd.goraebang.model.Product;
+import com.fd.goraebang.model.Song;
 
 import java.util.List;
 
 public class RecyclerAdapterCart extends RecyclerView.Adapter<RecyclerAdapterCart.ViewHolder> {
-    private List<Product> mValues;
+    private List<Song> mValues;
     private Context mContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -35,7 +35,7 @@ public class RecyclerAdapterCart extends RecyclerView.Adapter<RecyclerAdapterCar
         }
     }
 
-    public RecyclerAdapterCart(Context context, List<Product> items) {
+    public RecyclerAdapterCart(Context context, List<Song> items) {
         this.mContext = context;
         this.mValues = items;
     }
@@ -49,7 +49,7 @@ public class RecyclerAdapterCart extends RecyclerView.Adapter<RecyclerAdapterCar
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Product item = mValues.get(position);
+        final Song item = mValues.get(position);
 
         holder.tvName.setText(item.getName());
         holder.tvMall.setText(item.getMall().getName());

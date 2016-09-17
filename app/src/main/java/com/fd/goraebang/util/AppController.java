@@ -10,9 +10,7 @@ import com.crashlytics.android.Crashlytics;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.consts.URL;
 import com.fd.goraebang.interfaces.AccountService;
-import com.fd.goraebang.interfaces.OrderService;
-import com.fd.goraebang.interfaces.PostService;
-import com.fd.goraebang.interfaces.ProductService;
+import com.fd.goraebang.interfaces.SongService;
 import com.fd.goraebang.model.User;
 import com.fd.goraebang.util.helper.PrimitiveConverterFactory;
 import com.kakao.auth.ApprovalType;
@@ -40,9 +38,7 @@ public class AppController extends Application {
     // retrofit and interface
     private static Retrofit retrofit;
     private static AccountService accountService;
-    private static PostService postService;
-    private static OrderService orderService;
-    private static ProductService productService;
+    private static SongService songService;
 
     @Override
     public void onCreate() {
@@ -82,15 +78,11 @@ public class AppController extends Application {
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
         accountService = retrofit.create(AccountService.class);
-        postService = retrofit.create(PostService.class);
-        productService = retrofit.create(ProductService.class);
-        orderService = retrofit.create(OrderService.class);
+        songService = retrofit.create(SongService.class);
     }
 
     public static AccountService getAccountService(){ return accountService; }
-    public static PostService getPostService(){ return postService; }
-    public static ProductService getProductService(){ return productService; }
-    public static OrderService getOrderService(){ return orderService; }
+    public static SongService getSongService(){ return songService; }
 
     private static class KakaoSDKAdapter extends KakaoAdapter {
         @Override

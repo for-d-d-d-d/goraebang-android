@@ -35,7 +35,7 @@ public class ActivityAccountLogin extends CustomActivity {
         pref = getSharedPreferences(CONST.PREF_NAME, MODE_PRIVATE);
         editor = pref.edit();
 
-        btnLogin.setClickable(false);
+        // btnLogin.setClickable(false);
         btnLogin.setTextColor(getResources().getColor(R.color.gray));
 
         ListenerEditTextChanged listener = new ListenerEditTextChanged();
