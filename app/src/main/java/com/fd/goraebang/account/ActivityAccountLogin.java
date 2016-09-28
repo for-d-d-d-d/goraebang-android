@@ -11,12 +11,19 @@ import com.fd.goraebang.ActivityMain_;
 import com.fd.goraebang.R;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomActivity;
+import com.fd.goraebang.model.User;
+import com.fd.goraebang.util.AppController;
+import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.CustomProgressDialog;
+import com.fd.goraebang.util.Utils;
 import com.fd.goraebang.util.listener.EditTextChanged;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 @EActivity(R.layout.activity_account_login)
 public class ActivityAccountLogin extends CustomActivity {
@@ -35,7 +42,7 @@ public class ActivityAccountLogin extends CustomActivity {
         pref = getSharedPreferences(CONST.PREF_NAME, MODE_PRIVATE);
         editor = pref.edit();
 
-        // btnLogin.setClickable(false);
+        btnLogin.setClickable(false);
         btnLogin.setTextColor(getResources().getColor(R.color.gray));
 
         ListenerEditTextChanged listener = new ListenerEditTextChanged();
@@ -60,34 +67,42 @@ public class ActivityAccountLogin extends CustomActivity {
         final String email = etEmail.getText().toString();
         final String password = etPassword.getText().toString();
 
-        startActivity(new Intent(ActivityAccountLogin.this, ActivityMain_.class));
-        finish();
-        /*
         dialog = Utils.createDialog(this, dialog);
         Call<User> call = AppController.getAccountService().login(email, password);
         call.enqueue(new CallUtils<User>(call, this, getResources().getString(R.string.msgErrorCommon)) {
             @Override
-            public void onResponse(Response<User> response) {
-                onComplete();
+            public void onResponse(Call<User> call, Response<User> response) {
+                dialog = Utils.hideDialog(dialog);
+                if (response.isSuccessful() && response.body().getResult().equals("SUCCESS")) {
+                    AppController.User = response.body();
+                    AppController.USER_ID = response.body().getId();
+                    AppController.USER_MY_LIST_ID = response.body().getMyListId();
+                    AppController.USER_TOKEN = response.body().getMyToken();
 
-                if (response.isSuccess() && response.body().getToken() != null && response.body().getToken().length() > 0) {
-                    AppController.AUTHORIZATION = "JWT " + response.body().getToken();
-
-                    editor.putString("authorization", response.body().getToken());
-                    editor.putString("email", email);
-                    editor.putString("password", password);
-                    editor.commit();
+                    saveUserDataAndGoNext(email, password);
                 } else {
-                    tvMsgPassword.setText("아이디 혹은 비밀번호가 정확하지 않습니다.");
+                    showToast("아이디 혹은 비밀번호가 정확하지 않습니다.");
                 }
             }
 
             @Override
-            public void onComplete() {
+            public void onFailure(Call<User> call, Throwable t) {
                 dialog = Utils.hideDialog(dialog);
+                showToast(msg);
             }
         });
-        */
+    }
+
+    private void saveUserDataAndGoNext(String email, String password){
+        editor.putString("user_id", AppController.USER_ID);
+        editor.putString("user_my_list_id", AppController.USER_MY_LIST_ID);
+        editor.putString("user_token", AppController.USER_TOKEN);
+        editor.putString("email", email);
+        editor.putString("password", password);
+        editor.commit();
+
+        startActivity(new Intent(ActivityAccountLogin.this, ActivityMain_.class));
+        finish();
     }
 
     public void onClick(View v) {

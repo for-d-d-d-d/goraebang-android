@@ -54,10 +54,9 @@ public class RecyclerAdapterSongGrid extends RecyclerView.Adapter<RecyclerAdapte
         final Song item = mValues.get(position);
 
         holder.tvTitle.setText(item.getTitle());
-        holder.tvArtist.setText(item.getArtist());
-        holder.tvDate.setText(item.getDate());
+        holder.tvArtist.setText(item.getArtistName());
         holder.tvCntFavorite.setText(item.getCntFavorite() + "");
-        Glide.with(mContext).load(item.getImage()).into(holder.iv);
+        Glide.with(mContext).load(item.getJacketSmall()).into(holder.iv);
     }
 
     @Override

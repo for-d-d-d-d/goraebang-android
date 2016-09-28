@@ -24,6 +24,7 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
         public final TextView tvDate;
         public final TextView tvArtist;
         public final TextView tvCntFavorite;
+        public final TextView tvWords;
         public final ImageView iv;
 
         public ViewHolder(View view) {
@@ -32,6 +33,7 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
             tvTitle = (TextView) view.findViewById(R.id.tvTitle);
             tvArtist = (TextView) view.findViewById(R.id.tvArtist);
             tvDate = (TextView) view.findViewById(R.id.tvDate);
+            tvWords = (TextView) view.findViewById(R.id.tvWords);
             tvCntFavorite = (TextView) view.findViewById(R.id.tvCntFavorite);
             iv = (ImageView) view.findViewById(R.id.iv);
         }
@@ -54,10 +56,10 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
         final Song item = mValues.get(position);
 
         holder.tvTitle.setText(item.getTitle());
-        holder.tvArtist.setText(item.getArtist());
-        holder.tvDate.setText(item.getDate());
+        holder.tvArtist.setText(item.getArtistName());
+        holder.tvWords.setText(item.getLyrics());
         holder.tvCntFavorite.setText(item.getCntFavorite() + "");
-        Glide.with(mContext).load(item.getImage()).into(holder.iv);
+        Glide.with(mContext).load(item.getJacketSmall()).into(holder.iv);
     }
 
     @Override

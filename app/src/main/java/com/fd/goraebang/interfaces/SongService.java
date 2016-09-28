@@ -9,6 +9,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface SongService {
-    @GET("songs/")
-    Call<List<Song>> getProducts(@Query("page") int page);
+    @GET("top100/")
+    Call<List<Song>> getTopChart(@Query("page") int page);
 }

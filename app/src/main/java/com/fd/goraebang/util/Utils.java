@@ -139,43 +139,4 @@ public class Utils {
 
         return result;
     }
-
-    public static void sendEmail(Context context, int type){
-        String subject = "";
-        String content = "";
-        String newLine = "\n";
-
-        switch (type) {
-            default:
-            case CONST.EMAIL_QNA:
-                subject = "문의하기";
-
-                content += "1. 문의내용 : ";
-                content += newLine;
-                content += newLine;
-                content += "2. 이름 / 연락처 : ";
-                content += newLine;
-                content += newLine;
-                content += "3. 기타 : ";
-                break;
-            case CONST.EMAIL_COLLABORATION:
-                subject = "제휴 문의";
-
-                content += "1. 문의내용 : ";
-                content += newLine;
-                content += newLine;
-                content += "2. 회사명 / 직책 / 이름 / 연락처 : ";
-                content += newLine;
-                content += newLine;
-                content += "3. 기타 : ";
-                break;
-        }
-
-        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", CONST.TWENTY_EMAIL, null));
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        intent.putExtra(Intent.EXTRA_TEXT, content);
-        try {
-            context.startActivity(Intent.createChooser(intent, "[" + subject + "] 을(를) 전송할 이메일 앱을 선택해주세요."));
-        }catch (Exception e){ }
-    }
 }

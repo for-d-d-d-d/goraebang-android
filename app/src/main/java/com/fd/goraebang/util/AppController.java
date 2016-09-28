@@ -27,13 +27,13 @@ public class AppController extends Application {
     private static volatile AppController instance = null;
     private static volatile Activity currentActivity = null;
 
-    //private Tracker mTracker;
-
     public static User user;
     public static int SCREEN_WIDTH = 0;
     public static int SCREEN_HEIGHT = 0;
-    public static String AUTHORIZATION = null;
-    public static String MB_VERSION_NAME = "";
+    public static User User = null;
+    public static String USER_ID = null;
+    public static String USER_MY_LIST_ID = null;
+    public static String USER_TOKEN = null;
 
     // retrofit and interface
     private static Retrofit retrofit;
@@ -47,8 +47,10 @@ public class AppController extends Application {
         instance = this;
 
         // 재실행 시, 일단 shared preferences 에서 값을 가져와서 저장해둠.
-        if (AUTHORIZATION == null) {
-            AUTHORIZATION = "JWT " + getSharedPreferences(CONST.PREF_NAME, MODE_PRIVATE).getString("authorization", null);
+        if (USER_ID == null) {
+            USER_ID = getSharedPreferences(CONST.PREF_NAME, MODE_PRIVATE).getString("user_id", null);
+            USER_MY_LIST_ID = getSharedPreferences(CONST.PREF_NAME, MODE_PRIVATE).getString("user_my_list_id", null);
+            USER_TOKEN = getSharedPreferences(CONST.PREF_NAME, MODE_PRIVATE).getString("user_token", null);
         }
 
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
@@ -56,18 +58,6 @@ public class AppController extends Application {
         SCREEN_HEIGHT = displayMetrics.heightPixels;
         Fabric.with(this, new Crashlytics());
     }
-
-    /*
-        KakaoSDK.init(new KakaoSDKAdapter());
-    }
-
-    synchronized public Tracker getDefaultTracker() {
-        if (mTracker == null) {
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            mTracker = analytics.newTracker(getResources().getString(R.string.ga_trackingId));
-        }
-        return mTracker;
-    }*/
 
     static{
         user = new User();

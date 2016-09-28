@@ -55,7 +55,8 @@ public abstract class CallUtils<T> implements Callback<T> {
     public void onComplete(){}
 
     protected void showToast(String msg) {
-        Utils.showGlobalToast(context, msg);
+        if(msg != null)
+            Utils.showGlobalToast(context, msg);
     }
 
     protected void showSingleDialog(String msg) {
