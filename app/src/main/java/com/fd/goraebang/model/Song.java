@@ -10,6 +10,8 @@ public class Song {
     private String title;
     @JsonProperty("artist")
     private String artist;
+    @JsonProperty("date")
+    private String date;
     @JsonProperty("image")
     private String image;
     @JsonProperty("cnt_favorite")
@@ -39,6 +41,14 @@ public class Song {
 
     public void setArtist(String artist) {
         this.artist = artist;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getImage() {

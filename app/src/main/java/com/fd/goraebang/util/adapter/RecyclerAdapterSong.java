@@ -14,28 +14,30 @@ import com.fd.goraebang.model.Song;
 
 import java.util.List;
 
-public class RecyclerAdapterCart extends RecyclerView.Adapter<RecyclerAdapterCart.ViewHolder> {
+public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSong.ViewHolder> {
     private List<Song> mValues;
     private Context mContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public final View mView;
-        public final TextView tvName;
-        public final TextView tvPrice;
-        public final TextView tvMall;
+        public final TextView tvTitle;
+        public final TextView tvDate;
+        public final TextView tvArtist;
+        public final TextView tvCntFavorite;
         public final ImageView iv;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            tvName = (TextView) view.findViewById(R.id.tvName);
-            tvMall = (TextView) view.findViewById(R.id.tvMall);
-            tvPrice = (TextView) view.findViewById(R.id.tvPrice);
+            tvTitle = (TextView) view.findViewById(R.id.tvTitle);
+            tvArtist = (TextView) view.findViewById(R.id.tvArtist);
+            tvDate = (TextView) view.findViewById(R.id.tvDate);
+            tvCntFavorite = (TextView) view.findViewById(R.id.tvCntFavorite);
             iv = (ImageView) view.findViewById(R.id.iv);
         }
     }
 
-    public RecyclerAdapterCart(Context context, List<Song> items) {
+    public RecyclerAdapterSong(Context context, List<Song> items) {
         this.mContext = context;
         this.mValues = items;
     }
@@ -43,7 +45,7 @@ public class RecyclerAdapterCart extends RecyclerView.Adapter<RecyclerAdapterCar
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_item_recycler_cart, parent, false);
+                .inflate(R.layout.layout_item_recycler_song, parent, false);
         return new ViewHolder(view);
     }
 
@@ -51,9 +53,10 @@ public class RecyclerAdapterCart extends RecyclerView.Adapter<RecyclerAdapterCar
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Song item = mValues.get(position);
 
-        holder.tvName.setText(item.getName());
-        holder.tvMall.setText(item.getMall().getName());
-        holder.tvPrice.setText(item.getPrice() + "");
+        holder.tvTitle.setText(item.getTitle());
+        holder.tvArtist.setText(item.getArtist());
+        holder.tvDate.setText(item.getDate());
+        holder.tvCntFavorite.setText(item.getCntFavorite() + "");
         Glide.with(mContext).load(item.getImage()).into(holder.iv);
     }
 
