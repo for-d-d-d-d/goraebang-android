@@ -1,5 +1,7 @@
-package com.fd.goraebang;
+package com.fd.goraebang.main;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -9,15 +11,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fd.goraebang.R;
+import com.fd.goraebang.account.ActivityAccountLogin_;
+import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomActivityWithToolbar;
-import com.fd.goraebang.main.FragmentHome;
-import com.fd.goraebang.main.FragmentMyPage;
-import com.fd.goraebang.main.FragmentRecommend;
-import com.fd.goraebang.main.FragmentSearch;
-import com.fd.goraebang.main.FragmentSettings;
+import com.fd.goraebang.util.AppController;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -27,6 +29,9 @@ import org.androidannotations.annotations.ViewById;
 public class ActivityMain extends CustomActivityWithToolbar {
     @ViewById
     TabLayout tabLayout;
+
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
 
     private Fragment fragmentHome, fragmentSearch, fragmentRecommend, fragmentMyPage, fragmentSettings;
     private int tabPosition = 0;
@@ -50,6 +55,9 @@ public class ActivityMain extends CustomActivityWithToolbar {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        pref = getSharedPreferences(CONST.PREF_NAME, MODE_PRIVATE);
+        editor = pref.edit();
     }
 
     @AfterViews
@@ -147,6 +155,37 @@ public class ActivityMain extends CustomActivityWithToolbar {
                     exit = false;
                 }
             }, 2 * 1000);
+        }
+    }
+
+    private void logout(){
+        AppController.User = null;
+        AppController.USER_ID = null;
+        AppController.USER_MY_LIST_ID = null;
+        AppController.USER_TOKEN = null;
+        editor.putString("user_id", null);
+        editor.putString("user_my_list_id", null);
+        editor.putString("user_token", null);
+        editor.putString("email", null);
+        editor.putString("password", null);
+        editor.commit();
+        startActivity(new Intent(ActivityMain.this, ActivityAccountLogin_.class));
+        finish();
+    }
+
+    public void onClick(View v) {
+        Intent intent = null;
+
+        switch(v.getId()){
+            case R.id.btnLogout:
+                logout();
+                break;
+            default :
+                break;
+        }
+
+        if(intent != null) {
+            startActivity(intent);
         }
     }
 }

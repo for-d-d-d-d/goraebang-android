@@ -21,13 +21,13 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityLaunchScreen_" android:theme="@style/AppThemeLaunchScreen">
+        <activity android:name=".main.ActivityLaunchScreen_" android:theme="@style/AppThemeLaunchScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityMain_" />
+        <activity android:name=".main.ActivityMain_" />
         <activity android:name=".account.ActivityAccountLogin_" android:theme="@style/AppThemeBlack"/>
         <activity android:name=".account.ActivityAccountRegister_" android:theme="@style/AppThemeBlack"/>
         <activity android:name=".main.ActivitySongDetail_"/>

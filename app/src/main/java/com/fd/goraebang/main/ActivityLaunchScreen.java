@@ -1,10 +1,11 @@
-package com.fd.goraebang;
+package com.fd.goraebang.main;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.fd.goraebang.R;
 import com.fd.goraebang.account.ActivityAccountLogin_;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomActivity;

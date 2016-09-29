@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.fd.goraebang.ActivityMain_;
+import com.fd.goraebang.main.ActivityMain_;
 import com.fd.goraebang.R;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomActivity;
