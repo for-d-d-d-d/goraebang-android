@@ -14,13 +14,22 @@
             android:layout_height="200dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-            <ImageView
-                android:id="@+id/ivProfileBackground"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bg_my_page"
-                app:layout_collapseMode="parallax"/>
+                android:orientation="vertical"
+                app:layout_collapseMode="parallax">
+                <ImageView
+                    android:id="@+id/ivProfileBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bg_my_page"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@color/dark_gray"/>
+            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
