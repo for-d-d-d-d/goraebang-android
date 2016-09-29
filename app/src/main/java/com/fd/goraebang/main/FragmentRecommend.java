@@ -33,6 +33,7 @@ public class FragmentRecommend extends CustomFragmentWithRecyclerView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         isShowDivider = true;
+        isInfiniteScroll = false;
 
         super.onCreate(savedInstanceState);
 

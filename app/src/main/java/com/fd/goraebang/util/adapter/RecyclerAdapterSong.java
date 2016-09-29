@@ -21,7 +21,6 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
     public class ViewHolder extends RecyclerView.ViewHolder{
         public final View mView;
         public final TextView tvTitle;
-        public final TextView tvDate;
         public final TextView tvArtist;
         public final TextView tvCntFavorite;
         public final TextView tvWords;
@@ -32,7 +31,6 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
             mView = view;
             tvTitle = (TextView) view.findViewById(R.id.tvTitle);
             tvArtist = (TextView) view.findViewById(R.id.tvArtist);
-            tvDate = (TextView) view.findViewById(R.id.tvDate);
             tvWords = (TextView) view.findViewById(R.id.tvWords);
             tvCntFavorite = (TextView) view.findViewById(R.id.tvCntFavorite);
             iv = (ImageView) view.findViewById(R.id.iv);

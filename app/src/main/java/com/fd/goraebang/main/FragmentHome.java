@@ -34,6 +34,7 @@ public class FragmentHome extends CustomFragmentWithRecyclerView {
     public void onCreate(Bundle savedInstanceState) {
         isShowDivider = false;
         isGridType = true;
+        isInfiniteScroll = false;
         gridColumnCount = 3;
 
         super.onCreate(savedInstanceState);
