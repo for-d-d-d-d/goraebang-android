@@ -3,7 +3,6 @@ package com.fd.goraebang;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 
 import com.fd.goraebang.account.ActivityAccountLogin_;
@@ -16,7 +15,6 @@ import org.androidannotations.annotations.EActivity;
 
 @EActivity(R.layout.activity_launch_screen)
 public class ActivityLaunchScreen extends CustomActivity {
-    private static final int DELAY = 1000;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private Class<?> target;
@@ -58,16 +56,8 @@ public class ActivityLaunchScreen extends CustomActivity {
     }
 
     private void runNextActivity() {
-        new CountDownTimer(DELAY, 100) {
-            public void onTick(long millisUntilFinished) {
-                //nothing
-            }
-
-            public void onFinish() {
-                Intent intent = new Intent(ActivityLaunchScreen.this, target);
-                startActivity(intent);
-                finish();
-            }
-        }.start();
+        Intent intent = new Intent(ActivityLaunchScreen.this, target);
+        startActivity(intent);
+        finish();
     }
 }
