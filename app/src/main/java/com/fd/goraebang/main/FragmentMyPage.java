@@ -74,8 +74,8 @@ public class FragmentMyPage extends CustomFragment implements AppBarLayout.OnOff
 
         if(adapter == null){
             adapter = new FragmentTabPagerAdapter(getChildFragmentManager());
-            adapter.addFragment(FragmentMyPageList.newInstance("ANALYTICS"), "취향분석");
-            adapter.addFragment(FragmentMyPageList.newInstance("MYLIST"), "마이리스트");
+            adapter.addFragment(FragmentMyPageList.newInstance("ANALYSIS"), "취향분석");
+            adapter.addFragment(FragmentMyPageList.newInstance("FAVORITE"), "마이리스트");
             adapter.addFragment(FragmentMyPageList.newInstance("BLACKLIST"), "블랙리스트");
         }
     }

@@ -58,7 +58,7 @@ public class FragmentRecommend extends CustomFragmentWithRecyclerView {
         super.setupRecyclerView();
         super.setupSwipeRefreshLayout();
 
-        if(!isLoaded) {
+        if(items.size() == 0) {
             loadData(0);
         }
     }
@@ -72,7 +72,7 @@ public class FragmentRecommend extends CustomFragmentWithRecyclerView {
             }
         });
 
-        if(page == 0 && items.size() > 0)
+        if(page == 0)
             items.clear();
 
         Call<List<Song>> call = AppController.getSongService().getTopChart(page);
@@ -99,7 +99,6 @@ public class FragmentRecommend extends CustomFragmentWithRecyclerView {
     }
 
     void updateView(){
-        isLoaded = true;
         setMessage("");
         adapter.notifyDataSetChanged();
         if(items.size() == 0){

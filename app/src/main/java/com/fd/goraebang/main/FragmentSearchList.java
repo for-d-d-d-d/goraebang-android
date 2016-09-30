@@ -6,6 +6,8 @@ import android.view.View;
 import com.fd.goraebang.R;
 import com.fd.goraebang.custom.CustomFragmentWithRecyclerView;
 import com.fd.goraebang.model.Song;
+import com.fd.goraebang.util.AppController;
+import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.adapter.RecyclerAdapterSong;
 
 import org.androidannotations.annotations.AfterViews;
@@ -14,10 +16,14 @@ import org.androidannotations.annotations.EFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Response;
+
 @EFragment(R.layout.fragment_layout_recycler_view)
 public class FragmentSearchList extends CustomFragmentWithRecyclerView {
-    private List<Song> items = null;
+    private List<Song> items = new ArrayList<>();;
     private String keyword = null;
+    private String type = null;
 
     public static FragmentSearchList newInstance(String type, String keyword) {
         FragmentSearchList f = new FragmentSearchList_();
@@ -30,14 +36,10 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView {
 
     @Override
     public void onCreate(Bundle savedInstanceState){
-        if(keyword == null)
-            keyword = getArguments().getString("keyword");
+        type = getArguments().getString("type");
+        keyword = getArguments().getString("keyword");
 
         super.onCreate(savedInstanceState);
-
-        if(items == null){
-            items = new ArrayList<>();
-        }
 
         if(adapter == null) {
             adapter = new RecyclerAdapterSong(getActivity(), items);
@@ -68,36 +70,44 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView {
         if(keyword == null || keyword.length() < 1){
             return;
         }
-//
-//        Call<List<Post>> call = AppController.getPostService().getSearch(AppController.AUTHORIZATION, keyword, type, offset, limit);
-//        call.enqueue(new CallUtils<List<Post>>(call, getActivity(), getResources().getString(R.string.msgErrorLoadList)) {
-//            @Override
-//            public void onResponse(Response<List<Post>> response) {
-//                onComplete();
-//
-//                if (response.isSuccess()) {
-//                    if (response.body().size() > 0 && response.body().get(0).getEmptyImageUrl() != null) {
-//                        emptyImageUrl = response.body().get(0).getEmptyImageUrl();
-//                    } else {
-//                        items.addAll(response.body());
-//                    }
-//                    updateView();
-//                } else {
-//                    setMessage(msg);
-//                }
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//                swipeRefreshLayout.setRefreshing(false);
-//            }
-//        });
+
+        Call<List<Song>> call = null;
+
+        if(type.equals("FILTER")) {
+            call = AppController.getSongService().getSearch(keyword, page);
+        }else if(type.equals("TITLE")){
+            call = AppController.getSongService().getSearchByTitle(keyword, page);
+        }else if(type.equals("ARTIST")){
+            call = AppController.getSongService().getSearchByArtist(keyword, page);
+        }else if(type.equals("LYRICS")){
+            call = AppController.getSongService().getSearchByLyrics(keyword, page);
+        }else{
+            return;
+        }
+
+        call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
+            @Override
+            public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
+                onComplete();
+                if (response.isSuccessful() && response.body() != null) {
+                    items.addAll(response.body());
+                    updateView();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Song>> call, Throwable t) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     protected void searchKeyword(String keyword){
-        if(items == null)
-            return;
-
         items.clear();
         this.keyword = keyword;
 

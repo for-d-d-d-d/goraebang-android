@@ -6,6 +6,8 @@ import android.view.View;
 import com.fd.goraebang.R;
 import com.fd.goraebang.custom.CustomFragmentWithRecyclerView;
 import com.fd.goraebang.model.Song;
+import com.fd.goraebang.util.AppController;
+import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.adapter.RecyclerAdapterSong;
 
 import org.androidannotations.annotations.AfterViews;
@@ -14,9 +16,14 @@ import org.androidannotations.annotations.EFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Response;
+
 @EFragment(R.layout.fragment_layout_recycler_view)
 public class FragmentMyPageList extends CustomFragmentWithRecyclerView {
     private List<Song> items = null;
+    private String type = null;
+    private String emptyMessage = null;
 
     public static FragmentMyPageList newInstance(String type) {
         FragmentMyPageList f = new FragmentMyPageList_();
@@ -29,6 +36,8 @@ public class FragmentMyPageList extends CustomFragmentWithRecyclerView {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+        type = getArguments().getString("type");
 
         if(items == null){
             items = new ArrayList<>();
@@ -54,36 +63,52 @@ public class FragmentMyPageList extends CustomFragmentWithRecyclerView {
 
     @Override
     protected void loadData(int page){
-        swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
 
-        if(page == 0 && items.size() > 0){
+        if(page == 0){
             items.clear();
         }
 
-//
-//        Call<List<Post>> call = AppController.getPostService().getSearch(AppController.AUTHORIZATION, keyword, type, offset, limit);
-//        call.enqueue(new CallUtils<List<Post>>(call, getActivity(), getResources().getString(R.string.msgErrorLoadList)) {
-//            @Override
-//            public void onResponse(Response<List<Post>> response) {
-//                onComplete();
-//
-//                if (response.isSuccess()) {
-//                    if (response.body().size() > 0 && response.body().get(0).getEmptyImageUrl() != null) {
-//                        emptyImageUrl = response.body().get(0).getEmptyImageUrl();
-//                    } else {
-//                        items.addAll(response.body());
-//                    }
-//                    updateView();
-//                } else {
-//                    setMessage(msg);
-//                }
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//                swipeRefreshLayout.setRefreshing(false);
-//            }
-//        });
+        Call<List<Song>> call = null;
+
+        if(type.equals("ANALYSIS")){
+            emptyMessage = "취향분석 데이터가 없습니다.";
+            call = AppController.getSongService().getMyPageAnalysis(AppController.USER_ID, page);
+        }else if(type.equals("FAVORITE")){
+            emptyMessage = "마이리스트가 비어 있습니다.";
+            call = AppController.getSongService().getMyPageFavorite(AppController.USER_ID, AppController.USER_MY_LIST_ID, page);
+        }else if(type.equals("BLACKLIST")){
+            emptyMessage = "블랙리스트가 없습니다.";
+            call = AppController.getSongService().getMyPageBlacklist(AppController.USER_ID, page);
+        }else{
+            return;
+        }
+
+        call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
+            @Override
+            public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
+                onComplete();
+                if (response.isSuccessful() && response.body() != null) {
+                    items.addAll(response.body());
+                    updateView();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Song>> call, Throwable t) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     void updateView(){
@@ -91,7 +116,7 @@ public class FragmentMyPageList extends CustomFragmentWithRecyclerView {
         adapter.notifyDataSetChanged();
 
         if(items.size() == 0){
-            setMessage("검색결과가 없습니다.");
+            setMessage(emptyMessage);
         }
     }
 

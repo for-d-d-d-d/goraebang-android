@@ -10,8 +10,6 @@ import com.fd.goraebang.custom.CustomFragmentWithRecyclerView;
 import com.fd.goraebang.model.Song;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.CallUtils;
-import com.fd.goraebang.util.CustomProgressDialog;
-import com.fd.goraebang.util.Utils;
 import com.fd.goraebang.util.adapter.RecyclerAdapterSongGrid;
 
 import org.androidannotations.annotations.AfterViews;
@@ -26,7 +24,6 @@ import retrofit2.Response;
 @EFragment(R.layout.fragment_tab_home)
 public class FragmentHome extends CustomFragmentWithRecyclerView {
     private List<Song> items = null;
-    private CustomProgressDialog dialog = null;
 
     public static FragmentHome newInstance() {
         FragmentHome f = new FragmentHome_();
@@ -64,8 +61,9 @@ public class FragmentHome extends CustomFragmentWithRecyclerView {
         super.setupRecyclerView();
         super.setupSwipeRefreshLayout();
 
-        if(!isLoaded)
+        if(items.size() == 0) {
             loadData(0);
+        }
     }
 
     @Override
@@ -77,7 +75,7 @@ public class FragmentHome extends CustomFragmentWithRecyclerView {
             }
         });
 
-        if (page == 0 && items.size() > 0)
+        if (page == 0)
             items.clear();
 
         Call<List<Song>> call = AppController.getSongService().getTopChart(page);
@@ -99,13 +97,11 @@ public class FragmentHome extends CustomFragmentWithRecyclerView {
             @Override
             public void onComplete() {
                 swipeRefreshLayout.setRefreshing(false);
-                dialog = Utils.hideDialog(dialog);
             }
         });
     }
 
     void updateView() {
-        isLoaded = true;
         setMessage("");
         adapter.notifyDataSetChanged();
         if (items.size() == 0) {

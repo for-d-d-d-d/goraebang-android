@@ -40,11 +40,11 @@ public class FragmentSearch extends CustomFragment {
         super.onCreate(savedInstanceState);
 
         if(adapter == null){
-            adapter = new FragmentTabPagerAdapter(getActivity().getSupportFragmentManager());
+            adapter = new FragmentTabPagerAdapter(getChildFragmentManager());
             adapter.addFragment(FragmentSearchList.newInstance("FILTER", keyword), "조건검색");
             adapter.addFragment(FragmentSearchList.newInstance("TITLE", keyword), "제목별");
             adapter.addFragment(FragmentSearchList.newInstance("ARTIST", keyword), "아티스트별");
-            adapter.addFragment(FragmentSearchList.newInstance("WORDS", keyword), "가사별");
+            adapter.addFragment(FragmentSearchList.newInstance("LYRICS", keyword), "가사별");
         }
     }
 
@@ -59,6 +59,7 @@ public class FragmentSearch extends CustomFragment {
         etSearch.setOnEditorActionListener(new OnEditorActionListener());
 
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(viewPager);
 
     }
