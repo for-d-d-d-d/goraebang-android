@@ -8,7 +8,9 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Serializable {
     @JsonProperty("id")
-    private int id;
+    private String id;
+    @JsonProperty("mylist_id")
+    private String myListId;
     @JsonProperty("name")
     private String name;
     @JsonProperty("email")
@@ -19,17 +21,25 @@ public class User implements Serializable {
     private String socialType;
     @JsonProperty("social_id")
     private String socialId;
-    @JsonProperty("access_token")
-    private String accessToken;
-    @JsonProperty("customs_number")
-    private String customsNumber;
+    @JsonProperty("mytoken")
+    private String myToken;
+    @JsonProperty("result")
+    private String result;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public String getMyListId() {
+        return myListId;
+    }
+
+    public void setMyListId(String myListId) {
+        this.myListId = myListId;
     }
 
     public String getName() {
@@ -72,19 +82,19 @@ public class User implements Serializable {
         this.socialId = socialId;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getMyToken() {
+        return myToken;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setMyToken(String myToken) {
+        this.myToken = myToken;
     }
 
-    public String getCustomsNumber() {
-        return customsNumber;
+    public String getResult() {
+        return result;
     }
 
-    public void setCustomsNumber(String customsNumber) {
-        this.customsNumber = customsNumber;
+    public void setResult(String result) {
+        this.result = result;
     }
 }

@@ -1,0 +1,169 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark_gray"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/ic_logo_transparent"
+                android:layout_gravity="center"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/soft_gray"/>
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:hint="Email"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/soft_gray"
+                android:textSize="@dimen/text_size_light"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/soft_gray"/>
+
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:hint="Password"
+                android:imeOptions="actionDone"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/soft_gray"
+                android:textSize="@dimen/text_size_light"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/soft_gray"/>
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/colorPrimary"
+                android:onClick="onClick"
+                android:text="Login"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_bold"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/soft_gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnSocialFacebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:onClick="onClick"
+                    android:text="F"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_bold"/>
+
+                <Button
+                    android:id="@+id/btnSocialKakao"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:onClick="onClick"
+                    android:text="K"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_bold"/>
+
+                <Button
+                    android:id="@+id/btnSocialGoogle"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:onClick="onClick"
+                    android:text="G"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/btnFindPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/soft_gray"
+                    android:textSize="@dimen/text_size_light"
+                    android:padding="15dp"
+                    android:text="Forget Password"
+                    android:clickable="true"
+                    android:onClick="onClick"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"
+            android:onClick="onClick"
+            android:text="No account yet? Sign up now"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_regular"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</RelativeLayout>

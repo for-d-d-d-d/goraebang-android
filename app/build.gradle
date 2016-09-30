@@ -1,18 +1,23 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
+    maven { url 'https://maven.fabric.io/public' }
     mavenCentral()
 }
 
 buildscript {
     repositories {
-        maven {  }
+        maven { url 'https://maven.fabric.io/public' }
     }
-    dependencies {
 
+    dependencies {
+        // The Fabric Gradle plugin uses an open ended version to react
+        // quickly to Android tooling updates
+        classpath 'io.fabric.tools:gradle:1.+'
     }
 }
 
@@ -41,6 +46,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
     }
 }
 
@@ -75,4 +83,7 @@ dependencies {
     compile 'com.squareup.okhttp:logging-interceptor:2.6.0'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.yalantis:ucrop:1.3.+'
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.3@aar') {
+        transitive = true;
+    }
 }

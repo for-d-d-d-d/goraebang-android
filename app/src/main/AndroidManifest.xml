@@ -21,12 +21,19 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityLaunchScreen_">
+        <activity android:name=".main.ActivityLaunchScreen_" android:theme="@style/AppThemeLaunchScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityMain_" />
+        <activity android:name=".main.ActivityMain_" />
+        <activity android:name=".account.ActivityAccountLogin_" android:theme="@style/AppThemeBlack"/>
+        <activity android:name=".account.ActivityAccountRegister_" android:theme="@style/AppThemeBlack"/>
+        <activity android:name=".main.ActivitySongDetail_"/>
+        <activity android:name=".search.ActivitySearch_"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="0b3bc1a8787033fe9f36beaef0693659b1568ee7" />
     </application>
 </manifest>
