@@ -2,6 +2,7 @@ package com.fd.goraebang.util.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
         public final TextView tvTitle;
         public final TextView tvArtist;
         public final TextView tvCntFavorite;
-        public final TextView tvWords;
+        public final TextView tvLyrics;
         public final ImageView iv;
 
         public ViewHolder(View view) {
@@ -31,7 +32,7 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
             mView = view;
             tvTitle = (TextView) view.findViewById(R.id.tvTitle);
             tvArtist = (TextView) view.findViewById(R.id.tvArtist);
-            tvWords = (TextView) view.findViewById(R.id.tvWords);
+            tvLyrics = (TextView) view.findViewById(R.id.tvLyrics);
             tvCntFavorite = (TextView) view.findViewById(R.id.tvCntFavorite);
             iv = (ImageView) view.findViewById(R.id.iv);
         }
@@ -55,7 +56,7 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
 
         holder.tvTitle.setText(item.getTitle());
         holder.tvArtist.setText(item.getArtistName());
-        holder.tvWords.setText(item.getLyrics());
+        holder.tvLyrics.setText(Html.fromHtml(item.getLyrics()));
         holder.tvCntFavorite.setText(item.getCntFavorite() + "");
         Glide.with(mContext).load(item.getJacketSmall()).into(holder.iv);
     }

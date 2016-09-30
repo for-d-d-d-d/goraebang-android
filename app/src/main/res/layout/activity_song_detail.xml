@@ -14,27 +14,121 @@
         android:layout_marginTop="@dimen/toolbar_height"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/layout_item_recycler_song" />
-        </RelativeLayout>
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="1000dp"
-                android:background="@color/background_gray">
+            android:layout_height="140dp"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:background="@color/dark_gray">
+            <ImageView
+                android:id="@+id/iv"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_weight="1">
                 <TextView
                     android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_ultra_bold"/>
+                <TextView
+                    android:id="@+id/tvArtist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_regular"
+                    android:layout_marginTop="5dp"
+                    android:maxLines="1"/>
+                <TextView
+                    android:id="@+id/tvWords"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_ultra_light"
+                    android:layout_marginTop="5dp"
+                    android:maxLines="3"
+                    android:gravity="bottom"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="2dp"
+                android:paddingRight="5dp"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:id="@+id/tvCntFavorite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_light"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:id="@+id/ivBox"
+                    android:src="@drawable/ic_box_off"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:gravity="center_vertical">
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="15dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/colorPrimary"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Lyrics"
                     android:textColor="@color/white"/>
-            </RelativeLayout>
-        </ScrollView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="앨범/아티스트 >"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray"/>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tvLyrics"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray"
+                    android:padding="10dp"
+                    android:lineSpacingExtra="5dp"/>
+            </ScrollView>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

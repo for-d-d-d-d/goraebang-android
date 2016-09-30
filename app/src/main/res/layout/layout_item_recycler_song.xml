@@ -19,10 +19,9 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"/>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:layout_weight="1">
@@ -32,8 +31,8 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:textColor="@color/white"
-                android:text="asdf"
-                android:textSize="@dimen/text_size_ultra_bold"/>
+                android:textSize="@dimen/text_size_ultra_bold"
+                android:layout_alignParentTop="true"/>
             <TextView
                 android:id="@+id/tvArtist"
                 android:layout_width="match_parent"
@@ -41,17 +40,18 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_regular"
                 android:layout_marginTop="5dp"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:layout_below="@+id/tvTitle"/>
             <TextView
-                android:id="@+id/tvWords"
+                android:id="@+id/tvLyrics"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/text_size_ultra_light"
                 android:layout_marginTop="5dp"
-                android:maxLines="3"
-                android:gravity="bottom"/>
-        </LinearLayout>
+                android:maxLines="3"/>
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

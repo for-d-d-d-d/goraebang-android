@@ -1,9 +1,11 @@
 package com.fd.goraebang.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.fd.goraebang.R;
+import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomFragmentWithRecyclerView;
 import com.fd.goraebang.model.Song;
 import com.fd.goraebang.util.AppController;
@@ -129,5 +131,11 @@ public class FragmentMyPageList extends CustomFragmentWithRecyclerView {
 
     @Override
     protected void onItemClick(View view, int position) {
+        if(items.size() < position)
+            return;
+
+        Intent intent = new Intent(getActivity(), ActivitySongDetail_.class);
+        intent.putExtra("song", items.get(position));
+        startActivityForResult(intent, CONST.RQ_CODE_SONG_DETAIL);
     }
 }

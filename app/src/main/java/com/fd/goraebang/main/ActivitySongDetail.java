@@ -1,9 +1,12 @@
 package com.fd.goraebang.main;
 
 import android.content.Intent;
+import android.text.Html;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.fd.goraebang.R;
 import com.fd.goraebang.custom.CustomActivityWithToolbar;
 import com.fd.goraebang.model.Song;
@@ -15,7 +18,10 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.activity_song_detail)
 public class ActivitySongDetail extends CustomActivityWithToolbar {
     @ViewById
-    TextView tvTitle;
+    TextView tvTitle, tvArtist, tvLyrics, tvCntFavorite;
+
+    @ViewById
+    ImageView iv;
 
     private Song item = null;
 
@@ -27,6 +33,10 @@ public class ActivitySongDetail extends CustomActivityWithToolbar {
         item = (Song)intent.getSerializableExtra("song");
 
         tvTitle.setText(item.getTitle());
+        tvArtist.setText(item.getArtistName());
+        tvLyrics.setText(Html.fromHtml(item.getLyrics()));
+        tvCntFavorite.setText(item.getCntFavorite() + "");
+        Glide.with(this).load(item.getJacketSmall()).into(iv);
     }
 
 
