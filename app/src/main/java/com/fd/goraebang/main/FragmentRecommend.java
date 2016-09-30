@@ -34,7 +34,6 @@ public class FragmentRecommend extends CustomFragmentWithRecyclerView {
     public void onCreate(Bundle savedInstanceState) {
         isShowDivider = true;
         isInfiniteScroll = false;
-
         super.onCreate(savedInstanceState);
 
         if(items == null){
@@ -59,12 +58,19 @@ public class FragmentRecommend extends CustomFragmentWithRecyclerView {
         super.setupRecyclerView();
         super.setupSwipeRefreshLayout();
 
-        loadData(0);
+        if(!isLoaded) {
+            loadData(0);
+        }
     }
 
     @Override
     protected void loadData(int page) {
-        swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
 
         if(page == 0 && items.size() > 0)
             items.clear();
@@ -93,6 +99,7 @@ public class FragmentRecommend extends CustomFragmentWithRecyclerView {
     }
 
     void updateView(){
+        isLoaded = true;
         setMessage("");
         adapter.notifyDataSetChanged();
         if(items.size() == 0){
