@@ -94,21 +94,21 @@ public class FragmentMyPageList extends CustomFragmentWithRecyclerView {
         call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
-                onComplete();
                 if (response.isSuccessful() && response.body() != null) {
                     items.addAll(response.body());
-                    updateView();
                 }
+                onComplete();
             }
 
             @Override
             public void onFailure(Call<List<Song>> call, Throwable t) {
-
+                onComplete();
             }
 
             @Override
             public void onComplete() {
                 swipeRefreshLayout.setRefreshing(false);
+                updateView();
             }
         });
     }

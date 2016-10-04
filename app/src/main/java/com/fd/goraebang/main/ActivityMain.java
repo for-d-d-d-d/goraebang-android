@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -86,6 +87,15 @@ public class ActivityMain extends CustomActivityWithToolbar {
             tabs[i].setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
             tabLayout.addTab(tabLayout.newTab().setCustomView(tabs[i]), i);
         }
+
+        tabLayout.getTabAt(3).getCustomView().setSelected(true);
+    }
+
+    public void updateTabSelection(int position) {
+        Log.d("aaaaaa","position : " + position);
+        tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).getCustomView().setSelected(false);
+        tabLayout.getTabAt(position).getCustomView().setSelected(true);
+        tabLayout.setScrollPosition(position, 0, true);
     }
 
     private class onTabSelectListener implements TabLayout.OnTabSelectedListener{

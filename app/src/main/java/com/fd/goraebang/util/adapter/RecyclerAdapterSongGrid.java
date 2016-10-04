@@ -20,6 +20,7 @@ import java.util.List;
 public class RecyclerAdapterSongGrid extends RecyclerView.Adapter<RecyclerAdapterSongGrid.ViewHolder> {
     private List<Song> mValues;
     private Context mContext;
+    private boolean isBackgroundGradient;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public final View mView;
@@ -43,12 +44,21 @@ public class RecyclerAdapterSongGrid extends RecyclerView.Adapter<RecyclerAdapte
     public RecyclerAdapterSongGrid(Context context, List<Song> items) {
         this.mValues = items;
         this.mContext = context;
+        this.isBackgroundGradient = false;
+    }
+    public RecyclerAdapterSongGrid(Context context, List<Song> items, boolean isBackgroundGradient) {
+        this.mValues = items;
+        this.mContext = context;
+        this.isBackgroundGradient = isBackgroundGradient;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_item_recycler_song_grid, parent, false);
+        int layout = R.layout.layout_item_recycler_song_grid;
+        if(this.isBackgroundGradient)
+            layout = R.layout.layout_item_recycler_song_grid_gradient;
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         return new ViewHolder(view);
     }
 

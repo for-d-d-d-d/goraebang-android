@@ -56,7 +56,7 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
 
         holder.tvTitle.setText(item.getTitle());
         holder.tvArtist.setText(item.getArtistName());
-        holder.tvLyrics.setText(Html.fromHtml(item.getLyrics()));
+        holder.tvLyrics.setText(Html.fromHtml(item.getLyrics() + ""));
         holder.tvCntFavorite.setText(item.getCntFavorite() + "");
         Glide.with(mContext).load(item.getJacketSmall()).into(holder.iv);
     }

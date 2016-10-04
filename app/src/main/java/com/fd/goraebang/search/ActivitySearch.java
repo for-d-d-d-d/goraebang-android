@@ -31,7 +31,7 @@ public class ActivitySearch extends CustomActivityWithToolbar {
     private String keyword;
 
     @AfterViews
-    void init(){
+    void afterViews(){
         setToolbar("상세보기", 0, R.drawable.ic_arrow_back_white_24dp, 0, 0);
 
         if(adapter == null){
@@ -41,17 +41,12 @@ public class ActivitySearch extends CustomActivityWithToolbar {
             adapter.addFragment(FragmentSearchList.newInstance("ARTIST", keyword), "아티스트별");
             adapter.addFragment(FragmentSearchList.newInstance("LYRICS", keyword), "가사별");
         }
-    }
 
-
-    @AfterViews
-    void afterViews() {
         etSearch.setOnEditorActionListener(new OnEditorActionListener());
 
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(viewPager);
-
     }
 
     void onClickSearch(){
