@@ -210,7 +210,7 @@ public class FragmentHome extends CustomFragment {
 
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)viewPagerTopChart.getLayoutParams();
         if(AppController.SCREEN_WIDTH > 0){
-            layoutParams.height = ((int)(AppController.SCREEN_WIDTH / 3) * 2) + 50;
+            layoutParams.height = ((int)(AppController.SCREEN_WIDTH / 4) * 3);
         }else{
             layoutParams.height = 250;
         }
