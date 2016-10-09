@@ -1,4 +1,4 @@
-package com.fd.goraebang.main;
+package com.fd.goraebang.main.mypage;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,10 +13,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.fd.goraebang.R;
 import com.fd.goraebang.account.ActivityAccountLogin_;
 import com.fd.goraebang.custom.CustomFragment;
+import com.fd.goraebang.model.User;
 import com.fd.goraebang.util.AppController;
+import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.adapter.FragmentTabPagerAdapter;
 
 import org.androidannotations.annotations.AfterViews;
@@ -25,6 +28,9 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.glide.transformations.BlurTransformation;
+import retrofit2.Call;
+import retrofit2.Response;
 
 @EFragment(R.layout.fragment_tab_mypage)
 public class FragmentMyPage extends CustomFragment implements AppBarLayout.OnOffsetChangedListener {
@@ -43,7 +49,7 @@ public class FragmentMyPage extends CustomFragment implements AppBarLayout.OnOff
     @ViewById
     LinearLayout llTitleContainer;
     @ViewById
-    TextView tvNickname, tvMessage;
+    TextView tvName, tvMyListCount;
     @ViewById
     ImageView btnRight;
 
@@ -58,7 +64,6 @@ public class FragmentMyPage extends CustomFragment implements AppBarLayout.OnOff
     private int mMaxScrollSize;
     private float percentage = 0;
 
-    private String nickname, universityName, majorName;
     private SharedPreferences pref;
 
     private FragmentTabPagerAdapter adapter = null;
@@ -96,16 +101,50 @@ public class FragmentMyPage extends CustomFragment implements AppBarLayout.OnOff
         mMaxScrollSize = appbar.getTotalScrollRange();
 
         loadUser();
-
     }
     private void loadUser() {
 
+        Call<User> call = AppController.getAccountService().me(AppController.USER_TOKEN);
+        call.enqueue(new CallUtils<User>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    AppController.USER = response.body();
+                }
+                onComplete();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                onComplete();
+            }
+
+            @Override
+            public void onComplete() {
+                updateView();
+            }
+        });
     }
 
-    @Click(R.id.ivProfile)
+    private void updateView(){
+        if(AppController.USER != null) {
+            if (AppController.USER.getThumbnail() != null)
+                Glide.with(getActivity()).load(AppController.USER.getThumbnail()).into(ivProfile);
+
+            if (AppController.USER.getImage() != null)
+                Glide.with(getActivity()).load(AppController.USER.getImage())
+                        .bitmapTransform(new BlurTransformation(getActivity(), 25))
+                        .into(ivProfileBackground);
+
+            tvName.setText(AppController.USER.getName());
+            tvMyListCount.setText(AppController.USER.getMylistCount() + "");
+        }
+    }
+
+    @Click(R.id.btnSetting)
     void onClickProfile(){
         Intent intent = new Intent(getActivity(), ActivityAccountLogin_.class);
-        intent.putExtra("user", AppController.User);
+        intent.putExtra("user", AppController.USER);
         startActivity(intent);
     }
 

@@ -30,7 +30,7 @@
         <activity android:name=".main.ActivityMain_" />
         <activity android:name=".account.ActivityAccountLogin_" android:theme="@style/AppThemeBlack"/>
         <activity android:name=".account.ActivityAccountRegister_" android:theme="@style/AppThemeBlack"/>
-        <activity android:name=".main.ActivitySongDetail_"/>
+        <activity android:name=".song.ActivitySongDetail_"/>
         <activity android:name=".search.ActivitySearch_"/>
         <meta-data
             android:name="io.fabric.ApiKey"

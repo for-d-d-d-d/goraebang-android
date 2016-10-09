@@ -20,6 +20,8 @@ import com.fd.goraebang.R;
 import com.fd.goraebang.account.ActivityAccountLogin_;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomActivityWithToolbar;
+import com.fd.goraebang.main.home.FragmentHome;
+import com.fd.goraebang.main.mypage.FragmentMyPage;
 import com.fd.goraebang.util.AppController;
 
 import org.androidannotations.annotations.AfterViews;
@@ -169,7 +171,7 @@ public class ActivityMain extends CustomActivityWithToolbar {
     }
 
     private void logout(){
-        AppController.User = null;
+        AppController.USER = null;
         AppController.USER_ID = null;
         AppController.USER_MY_LIST_ID = null;
         AppController.USER_TOKEN = null;

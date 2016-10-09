@@ -1,4 +1,4 @@
-package com.fd.goraebang.main;
+package com.fd.goraebang.main.home;
 
 import android.os.Bundle;
 import android.widget.ImageView;

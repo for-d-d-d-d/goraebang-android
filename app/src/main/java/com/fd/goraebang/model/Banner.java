@@ -13,6 +13,8 @@ public class Banner implements Serializable {
     private String title;
     @JsonProperty("image")
     private String image;
+    @JsonProperty("url")
+    private String url;
 
     public int getId() {
         return id;
@@ -36,5 +38,13 @@ public class Banner implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

@@ -1,4 +1,4 @@
-package com.fd.goraebang.main;
+package com.fd.goraebang.main.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import com.fd.goraebang.R;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomFragment;
 import com.fd.goraebang.model.Song;
+import com.fd.goraebang.song.ActivitySongDetail_;
 import com.fd.goraebang.util.adapter.RecyclerAdapterSongGrid;
 import com.fd.goraebang.util.listener.RecyclerItemClickListener;
 

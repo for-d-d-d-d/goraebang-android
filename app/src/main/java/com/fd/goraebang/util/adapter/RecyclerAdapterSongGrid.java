@@ -27,7 +27,7 @@ public class RecyclerAdapterSongGrid extends RecyclerView.Adapter<RecyclerAdapte
         public final CardView cardView;
         public final TextView tvTitle;
         public final TextView tvArtist;
-        public final TextView tvCntFavorite;
+        public final TextView tvTjnum;
         public final ImageView iv;
 
         public ViewHolder(View view) {
@@ -36,7 +36,7 @@ public class RecyclerAdapterSongGrid extends RecyclerView.Adapter<RecyclerAdapte
             cardView = (CardView) view.findViewById(R.id.cardView);
             tvTitle = (TextView) view.findViewById(R.id.tvTitle);
             tvArtist = (TextView) view.findViewById(R.id.tvArtist);
-            tvCntFavorite = (TextView) view.findViewById(R.id.tvCntFavorite);
+            tvTjnum = (TextView) view.findViewById(R.id.tvTjnum);
             iv = (ImageView) view.findViewById(R.id.iv);
         }
     }
@@ -75,7 +75,7 @@ public class RecyclerAdapterSongGrid extends RecyclerView.Adapter<RecyclerAdapte
 
         holder.tvTitle.setText(item.getTitle());
         holder.tvArtist.setText(item.getArtistName());
-        holder.tvCntFavorite.setText(item.getCntFavorite() + "");
+        holder.tvTjnum.setText(item.getSongTjnum());
         Glide.with(mContext).load(item.getJacketSmall()).into(holder.iv);
     }
 

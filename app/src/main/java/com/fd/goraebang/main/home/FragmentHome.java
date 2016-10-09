@@ -1,16 +1,11 @@
-package com.fd.goraebang.main;
+package com.fd.goraebang.main.home;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.fd.goraebang.R;
-import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomFragment;
 import com.fd.goraebang.model.Banner;
 import com.fd.goraebang.model.Song;
@@ -20,8 +15,6 @@ import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.CustomProgressDialog;
 import com.fd.goraebang.util.Utils;
 import com.fd.goraebang.util.adapter.FragmentTabPagerAdapter;
-import com.fd.goraebang.util.adapter.RecyclerAdapterSongGrid;
-import com.fd.goraebang.util.listener.RecyclerItemClickListener;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -37,13 +30,7 @@ import retrofit2.Response;
 @EFragment(R.layout.fragment_tab_home)
 public class FragmentHome extends CustomFragment {
     @ViewById
-    ViewPager viewPagerBanner, viewPagerTopChart;
-
-    @ViewById
-    RecyclerView recyclerViewNewChart;
-
-    @ViewById
-    LinearLayout llTopChart, llNewChart;
+    ViewPager viewPagerBanner, viewPagerTopChart, viewPagerNewChart;
 
     private List<Banner> itemsBanner = null;
     private ArrayList<Song> itemsTopChart = null;
@@ -52,9 +39,7 @@ public class FragmentHome extends CustomFragment {
     private CustomProgressDialog dialog;
     private FragmentTabPagerAdapter adapterBanner;
     private FragmentTabPagerAdapter adapterTopChart;
-    private RecyclerView.Adapter adapterNewChart;
-
-    LinearLayoutManager mLinearLayoutManagerNewChart;
+    private FragmentTabPagerAdapter adapterNewChart;
 
     public static FragmentHome newInstance() {
         FragmentHome f = new FragmentHome_();
@@ -168,24 +153,6 @@ public class FragmentHome extends CustomFragment {
     private void updateViewBanner() {
         adapterBanner = new FragmentTabPagerAdapter(getChildFragmentManager());
 
-        Banner dump;
-
-        dump = new Banner();
-        dump.setId(1);
-        dump.setImage("http://image.bugsm.co.kr/album/images/original/200580/20058051.jpg");
-        dump.setTitle("I am a dreamer 1");
-        itemsBanner.add(dump);
-        dump = new Banner();
-        dump.setId(1);
-        dump.setImage("http://image.bugsm.co.kr/album/images/original/200580/20058051.jpg");
-        dump.setTitle("I am a dreamer 2");
-        itemsBanner.add(dump);
-        dump = new Banner();
-        dump.setId(1);
-        dump.setImage("http://image.bugsm.co.kr/album/images/original/200580/20058051.jpg");
-        dump.setTitle("I am a dreamer 3");
-        itemsBanner.add(dump);
-
         for (Banner obj : itemsBanner) {
             adapterBanner.addFragment(FragmentHomeBanner.newInstance(obj), obj.getTitle());
         }
@@ -210,46 +177,42 @@ public class FragmentHome extends CustomFragment {
 
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)viewPagerTopChart.getLayoutParams();
         if(AppController.SCREEN_WIDTH > 0){
-            layoutParams.height = ((int)(AppController.SCREEN_WIDTH / 4) * 3);
+            layoutParams.height = ((int)(AppController.SCREEN_WIDTH / 3) * 2) + 50;
         }else{
             layoutParams.height = 250;
         }
     }
 
     private void updateViewNewChart() {
-        if (adapterNewChart == null) {
-            adapterNewChart = new RecyclerAdapterSongGrid(getActivity(), itemsNewChart, true);
+        adapterNewChart = new FragmentTabPagerAdapter(getChildFragmentManager());
+
+        if(itemsNewChart.size() >= 6){
+            adapterNewChart.addFragment(FragmentHomeNewChart.newInstance(new ArrayList<Song>(itemsNewChart.subList(0, 6))), "A");
         }
-        mLinearLayoutManagerNewChart = new GridLayoutManager(getActivity(), 3);
-        recyclerViewNewChart.setAdapter(adapterNewChart);
-        recyclerViewNewChart.setLayoutManager(mLinearLayoutManagerNewChart);
-        recyclerViewNewChart.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new OnItemClickListener()));
-        adapterNewChart.notifyDataSetChanged();
+        if(itemsNewChart.size() >= 12){
+            adapterNewChart.addFragment(FragmentHomeNewChart.newInstance(new ArrayList<Song>(itemsNewChart.subList(6, 12))), "B");
+        }
+        if(itemsNewChart.size() >= 18){
+            adapterNewChart.addFragment(FragmentHomeNewChart.newInstance(new ArrayList<Song>(itemsNewChart.subList(12, 18))), "C");
+        }
+
+        viewPagerNewChart.setAdapter(adapterNewChart);
+
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)viewPagerNewChart.getLayoutParams();
+        if(AppController.SCREEN_WIDTH > 0){
+            layoutParams.height = ((int)(AppController.SCREEN_WIDTH / 3) * 2) + 50;
+        }else{
+            layoutParams.height = 250;
+        }
     }
 
     @Click(R.id.llTopChart)
     void onClickTopChart(){
-        ((ActivityMain)getActivity()).updateTabSelection(3);
+        startActivity(new Intent(getActivity(), ActivitySearch_.class));
     }
 
     @Click(R.id.llNewChart)
     void onClickNewChart(){
         startActivity(new Intent(getActivity(), ActivitySearch_.class));
-    }
-
-    private void onItemClick(View view, int position) {
-        if (itemsTopChart.size() < position)
-            return;
-
-        Intent intent = new Intent(getActivity(), ActivitySongDetail_.class);
-        intent.putExtra("song", itemsTopChart.get(position));
-        startActivityForResult(intent, CONST.RQ_CODE_SONG_DETAIL);
-    }
-
-    private class OnItemClickListener extends RecyclerItemClickListener.SimpleOnItemClickListener {
-        @Override
-        public void onItemClick(View view, int position) {
-            FragmentHome.this.onItemClick(view, position);
-        }
     }
 }

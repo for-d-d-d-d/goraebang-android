@@ -38,20 +38,14 @@ public class Song implements Serializable {
     @JsonProperty("jacket_small")
     private String jacketSmall;
     @JsonProperty("song_tjnum")
-    private int songTjnum;
+    private String songTjnum;
     @JsonProperty("song_num")
-    private int songNum;
-    @JsonProperty("lowkey")
-    private String lowkey;
-    @JsonProperty("highkey")
-    private String highkey;
-    @JsonProperty("created_at")
-    private String createdAt;
-    @JsonProperty("updated_at")
-    private String updatedAt;
-    @JsonProperty("cnt_favorite")
+    private String songNum;
+    @JsonProperty("release")
+    private String release;
+    @JsonProperty("mylist_count")
     private int cntFavorite;
-    @JsonProperty("is_favorite")
+    @JsonProperty("is_my_favorite")
     private boolean isFavorite;
 
     public int getId() {
@@ -174,52 +168,28 @@ public class Song implements Serializable {
         this.jacketSmall = jacketSmall;
     }
 
-    public int getSongTjnum() {
+    public String getSongTjnum() {
         return songTjnum;
     }
 
-    public void setSongTjnum(int songTjnum) {
+    public void setSongTjnum(String songTjnum) {
         this.songTjnum = songTjnum;
     }
 
-    public int getSongNum() {
+    public String getSongNum() {
         return songNum;
     }
 
-    public void setSongNum(int songNum) {
+    public void setSongNum(String songNum) {
         this.songNum = songNum;
     }
 
-    public String getLowkey() {
-        return lowkey;
+    public String getRelease() {
+        return release;
     }
 
-    public void setLowkey(String lowkey) {
-        this.lowkey = lowkey;
-    }
-
-    public String getHighkey() {
-        return highkey;
-    }
-
-    public void setHighkey(String highkey) {
-        this.highkey = highkey;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setRelease(String release) {
+        this.release = release;
     }
 
     public int getCntFavorite() {

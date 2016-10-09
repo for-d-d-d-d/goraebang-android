@@ -1,4 +1,4 @@
-package com.fd.goraebang.main;
+package com.fd.goraebang.song;
 
 import android.content.Intent;
 import android.text.Html;

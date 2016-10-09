@@ -18,13 +18,16 @@ import java.util.List;
 public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSong.ViewHolder> {
     private List<Song> mValues;
     private Context mContext;
+    private boolean isShowLyrics;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public final View mView;
         public final TextView tvTitle;
         public final TextView tvArtist;
         public final TextView tvCntFavorite;
+        public final TextView tvTjnum;
         public final TextView tvLyrics;
+        public final TextView tvRelease;
         public final ImageView iv;
 
         public ViewHolder(View view) {
@@ -33,7 +36,9 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
             tvTitle = (TextView) view.findViewById(R.id.tvTitle);
             tvArtist = (TextView) view.findViewById(R.id.tvArtist);
             tvLyrics = (TextView) view.findViewById(R.id.tvLyrics);
+            tvRelease = (TextView) view.findViewById(R.id.tvRelease);
             tvCntFavorite = (TextView) view.findViewById(R.id.tvCntFavorite);
+            tvTjnum = (TextView) view.findViewById(R.id.tvTjnum);
             iv = (ImageView) view.findViewById(R.id.iv);
         }
     }
@@ -41,6 +46,13 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
     public RecyclerAdapterSong(Context context, List<Song> items) {
         this.mContext = context;
         this.mValues = items;
+        this.isShowLyrics = false;
+    }
+
+    public RecyclerAdapterSong(Context context, List<Song> items, boolean isShowLyrics) {
+        this.mContext = context;
+        this.mValues = items;
+        this.isShowLyrics = isShowLyrics;
     }
 
     @Override
@@ -56,8 +68,13 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
 
         holder.tvTitle.setText(item.getTitle());
         holder.tvArtist.setText(item.getArtistName());
-        holder.tvLyrics.setText(Html.fromHtml(item.getLyrics() + ""));
-        holder.tvCntFavorite.setText(item.getCntFavorite() + "");
+        if(this.isShowLyrics){
+            holder.tvLyrics.setText(Html.fromHtml(item.getLyrics() + ""));
+        }else{
+            holder.tvCntFavorite.setText(item.getCntFavorite() + "");
+            holder.tvRelease.setText(item.getRelease());
+        }
+        holder.tvTjnum.setText(item.getSongTjnum());
         Glide.with(mContext).load(item.getJacketSmall()).into(holder.iv);
     }
 

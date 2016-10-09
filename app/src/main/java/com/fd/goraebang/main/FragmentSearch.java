@@ -9,6 +9,7 @@ import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomFragmentWithRecyclerView;
 import com.fd.goraebang.model.Song;
 import com.fd.goraebang.search.ActivitySearch_;
+import com.fd.goraebang.song.ActivitySongDetail_;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.adapter.RecyclerAdapterSong;
