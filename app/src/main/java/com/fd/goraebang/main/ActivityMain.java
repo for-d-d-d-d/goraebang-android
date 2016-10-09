@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -19,6 +20,8 @@ import com.fd.goraebang.R;
 import com.fd.goraebang.account.ActivityAccountLogin_;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomActivityWithToolbar;
+import com.fd.goraebang.main.home.FragmentHome;
+import com.fd.goraebang.main.mypage.FragmentMyPage;
 import com.fd.goraebang.util.AppController;
 
 import org.androidannotations.annotations.AfterViews;
@@ -86,6 +89,15 @@ public class ActivityMain extends CustomActivityWithToolbar {
             tabs[i].setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
             tabLayout.addTab(tabLayout.newTab().setCustomView(tabs[i]), i);
         }
+
+        tabLayout.getTabAt(3).getCustomView().setSelected(true);
+    }
+
+    public void updateTabSelection(int position) {
+        Log.d("aaaaaa","position : " + position);
+        tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).getCustomView().setSelected(false);
+        tabLayout.getTabAt(position).getCustomView().setSelected(true);
+        tabLayout.setScrollPosition(position, 0, true);
     }
 
     private class onTabSelectListener implements TabLayout.OnTabSelectedListener{
@@ -159,7 +171,7 @@ public class ActivityMain extends CustomActivityWithToolbar {
     }
 
     private void logout(){
-        AppController.User = null;
+        AppController.USER = null;
         AppController.USER_ID = null;
         AppController.USER_MY_LIST_ID = null;
         AppController.USER_TOKEN = null;

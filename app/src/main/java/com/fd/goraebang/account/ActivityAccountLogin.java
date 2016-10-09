@@ -74,7 +74,7 @@ public class ActivityAccountLogin extends CustomActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 dialog = Utils.hideDialog(dialog);
                 if (response.isSuccessful() && response.body().getResult().equals("SUCCESS")) {
-                    AppController.User = response.body();
+                    AppController.USER = response.body();
                     AppController.USER_ID = response.body().getId();
                     AppController.USER_MY_LIST_ID = response.body().getMyListId();
                     AppController.USER_TOKEN = response.body().getMyToken();

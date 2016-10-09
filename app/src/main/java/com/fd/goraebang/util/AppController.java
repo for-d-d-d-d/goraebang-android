@@ -27,10 +27,9 @@ public class AppController extends Application {
     private static volatile AppController instance = null;
     private static volatile Activity currentActivity = null;
 
-    public static User user;
     public static int SCREEN_WIDTH = 0;
     public static int SCREEN_HEIGHT = 0;
-    public static User User = null;
+    public static User USER = null;
     public static String USER_ID = null;
     public static String USER_MY_LIST_ID = null;
     public static String USER_TOKEN = null;
@@ -60,7 +59,7 @@ public class AppController extends Application {
     }
 
     static{
-        user = new User();
+        USER = new User();
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(URL.GET_API_URL())

@@ -20,13 +20,14 @@ import java.util.List;
 public class RecyclerAdapterSongGrid extends RecyclerView.Adapter<RecyclerAdapterSongGrid.ViewHolder> {
     private List<Song> mValues;
     private Context mContext;
+    private boolean isBackgroundGradient;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public final View mView;
         public final CardView cardView;
         public final TextView tvTitle;
         public final TextView tvArtist;
-        public final TextView tvCntFavorite;
+        public final TextView tvTjnum;
         public final ImageView iv;
 
         public ViewHolder(View view) {
@@ -35,7 +36,7 @@ public class RecyclerAdapterSongGrid extends RecyclerView.Adapter<RecyclerAdapte
             cardView = (CardView) view.findViewById(R.id.cardView);
             tvTitle = (TextView) view.findViewById(R.id.tvTitle);
             tvArtist = (TextView) view.findViewById(R.id.tvArtist);
-            tvCntFavorite = (TextView) view.findViewById(R.id.tvCntFavorite);
+            tvTjnum = (TextView) view.findViewById(R.id.tvTjnum);
             iv = (ImageView) view.findViewById(R.id.iv);
         }
     }
@@ -43,12 +44,21 @@ public class RecyclerAdapterSongGrid extends RecyclerView.Adapter<RecyclerAdapte
     public RecyclerAdapterSongGrid(Context context, List<Song> items) {
         this.mValues = items;
         this.mContext = context;
+        this.isBackgroundGradient = false;
+    }
+    public RecyclerAdapterSongGrid(Context context, List<Song> items, boolean isBackgroundGradient) {
+        this.mValues = items;
+        this.mContext = context;
+        this.isBackgroundGradient = isBackgroundGradient;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_item_recycler_song_grid, parent, false);
+        int layout = R.layout.layout_item_recycler_song_grid;
+        if(this.isBackgroundGradient)
+            layout = R.layout.layout_item_recycler_song_grid_gradient;
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -65,7 +75,7 @@ public class RecyclerAdapterSongGrid extends RecyclerView.Adapter<RecyclerAdapte
 
         holder.tvTitle.setText(item.getTitle());
         holder.tvArtist.setText(item.getArtistName());
-        holder.tvCntFavorite.setText(item.getCntFavorite() + "");
+        holder.tvTjnum.setText(item.getSongTjnum());
         Glide.with(mContext).load(item.getJacketSmall()).into(holder.iv);
     }
 

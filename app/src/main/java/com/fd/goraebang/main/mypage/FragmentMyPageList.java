@@ -1,4 +1,4 @@
-package com.fd.goraebang.main;
+package com.fd.goraebang.main.mypage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import com.fd.goraebang.R;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomFragmentWithRecyclerView;
 import com.fd.goraebang.model.Song;
+import com.fd.goraebang.song.ActivitySongDetail_;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.adapter.RecyclerAdapterSong;
@@ -94,21 +95,21 @@ public class FragmentMyPageList extends CustomFragmentWithRecyclerView {
         call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
-                onComplete();
                 if (response.isSuccessful() && response.body() != null) {
                     items.addAll(response.body());
-                    updateView();
                 }
+                onComplete();
             }
 
             @Override
             public void onFailure(Call<List<Song>> call, Throwable t) {
-
+                onComplete();
             }
 
             @Override
             public void onComplete() {
                 swipeRefreshLayout.setRefreshing(false);
+                updateView();
             }
         });
     }

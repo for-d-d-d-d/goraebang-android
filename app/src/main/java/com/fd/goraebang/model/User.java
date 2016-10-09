@@ -15,8 +15,10 @@ public class User implements Serializable {
     private String name;
     @JsonProperty("email")
     private String email;
-    @JsonProperty("image")
+    @JsonProperty("profile_img_origin")
     private String image;
+    @JsonProperty("profile_img_400")
+    private String thumbnail;
     @JsonProperty("social_type")
     private String socialType;
     @JsonProperty("social_id")
@@ -25,6 +27,8 @@ public class User implements Serializable {
     private String myToken;
     @JsonProperty("result")
     private String result;
+    @JsonProperty("mylist_count")
+    private int mylistCount;
 
     public String getId() {
         return id;
@@ -96,5 +100,21 @@ public class User implements Serializable {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public int getMylistCount() {
+        return mylistCount;
+    }
+
+    public void setMylistCount(int mylistCount) {
+        this.mylistCount = mylistCount;
     }
 }

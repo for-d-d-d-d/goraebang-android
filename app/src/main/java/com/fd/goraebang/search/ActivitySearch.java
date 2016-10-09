@@ -31,27 +31,21 @@ public class ActivitySearch extends CustomActivityWithToolbar {
     private String keyword;
 
     @AfterViews
-    void init(){
-        setToolbar("상세보기", 0, R.drawable.ic_arrow_back_white_24dp, 0, 0);
+    void afterViews(){
+        setToolbar("상세보기", 0, R.drawable.ic_arrow_back_white_24dp, R.drawable.ic_local_bar_white_24dp, 0);
 
         if(adapter == null){
             adapter = new FragmentTabPagerAdapter(getSupportFragmentManager());
-            adapter.addFragment(FragmentSearchList.newInstance("FILTER", keyword), "조건검색");
             adapter.addFragment(FragmentSearchList.newInstance("TITLE", keyword), "제목별");
             adapter.addFragment(FragmentSearchList.newInstance("ARTIST", keyword), "아티스트별");
             adapter.addFragment(FragmentSearchList.newInstance("LYRICS", keyword), "가사별");
         }
-    }
 
-
-    @AfterViews
-    void afterViews() {
         etSearch.setOnEditorActionListener(new OnEditorActionListener());
 
         viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
-
     }
 
     void onClickSearch(){
@@ -59,7 +53,6 @@ public class ActivitySearch extends CustomActivityWithToolbar {
         ((FragmentSearchList)adapter.getItem(0)).searchKeyword(keyword);
         ((FragmentSearchList)adapter.getItem(1)).searchKeyword(keyword);
         ((FragmentSearchList)adapter.getItem(2)).searchKeyword(keyword);
-        ((FragmentSearchList)adapter.getItem(3)).searchKeyword(keyword);
         Utils.hideSoftKeyboard(this);
 
     }
@@ -82,6 +75,9 @@ public class ActivitySearch extends CustomActivityWithToolbar {
                 finish();
                 break;
             case R.id.btnSearch:
+                onClickSearch();
+                break;
+            case R.id.btnRight:
                 onClickSearch();
                 break;
             default :

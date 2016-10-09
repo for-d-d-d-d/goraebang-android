@@ -8,6 +8,7 @@ import com.fd.goraebang.R;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomFragmentWithRecyclerView;
 import com.fd.goraebang.model.Song;
+import com.fd.goraebang.song.ActivitySongDetail_;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.adapter.RecyclerAdapterSong;
@@ -33,7 +34,6 @@ public class FragmentRecommend extends CustomFragmentWithRecyclerView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         isShowDivider = true;
-        isInfiniteScroll = false;
         super.onCreate(savedInstanceState);
 
         if(items == null){
@@ -79,21 +79,21 @@ public class FragmentRecommend extends CustomFragmentWithRecyclerView {
         call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
-                onComplete();
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null && response.body().get(0).getAlbumId() > 0) {
                     items.addAll(response.body());
-                    updateView();
                 }
+                onComplete();
             }
 
             @Override
             public void onFailure(Call<List<Song>> call, Throwable t) {
-
+                onComplete();
             }
 
             @Override
             public void onComplete() {
                 swipeRefreshLayout.setRefreshing(false);
+                updateView();
             }
         });
     }

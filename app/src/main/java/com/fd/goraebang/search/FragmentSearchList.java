@@ -2,14 +2,13 @@ package com.fd.goraebang.search;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.fd.goraebang.R;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomFragmentWithRecyclerView;
-import com.fd.goraebang.main.ActivitySongDetail_;
 import com.fd.goraebang.model.Song;
+import com.fd.goraebang.song.ActivitySongDetail_;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.adapter.RecyclerAdapterSong;
@@ -75,39 +74,25 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView {
             return;
         }
 
-        Call<List<Song>> call = null;
-
-        if(type.equals("FILTER")) {
-            call = AppController.getSongService().getSearch(keyword, page);
-        }else if(type.equals("TITLE")){
-            call = AppController.getSongService().getSearchByTitle(keyword, page);
-        }else if(type.equals("ARTIST")){
-            call = AppController.getSongService().getSearchByArtist(keyword, page);
-        }else if(type.equals("LYRICS")){
-            call = AppController.getSongService().getSearchByLyrics(keyword, page);
-        }else{
-            return;
-        }
-        Log.d("aaaaa",type);
-
+        Call<List<Song>> call = AppController.getSongService().getSearch(AppController.USER_TOKEN, keyword, type.toLowerCase(), page);
         call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
-                onComplete();
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null && response.body().size() > 0) {
                     items.addAll(response.body());
-                    updateView();
                 }
+                onComplete();
             }
 
             @Override
             public void onFailure(Call<List<Song>> call, Throwable t) {
-                Log.d("aaaaa","onFailure " + type);
+                onComplete();
             }
 
             @Override
             public void onComplete() {
                 swipeRefreshLayout.setRefreshing(false);
+                updateView();
             }
         });
     }

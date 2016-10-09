@@ -1,5 +1,6 @@
 package com.fd.goraebang.interfaces;
 
+import com.fd.goraebang.model.Banner;
 import com.fd.goraebang.model.Song;
 
 import java.util.List;
@@ -12,6 +13,12 @@ public interface SongService {
     @GET("top100")
     Call<List<Song>> getTopChart(@Query("page") int page);
 
+    @GET("main_banner")
+    Call<List<Banner>> getMainBanner();
+
+    @GET("top100")
+    Call<List<Song>> getMainNewChart();
+
     @GET("song")
     Call<List<Song>> getMyPageAnalysis(@Query("id") String user_id, @Query("page") int page);
 
@@ -21,15 +28,6 @@ public interface SongService {
     @GET("blacklist_song_read")
     Call<List<Song>> getMyPageBlacklist(@Query("id") String id, @Query("page") int page);
 
-    @GET("search")
-    Call<List<Song>> getSearch(@Query("[query]") String query, @Query("page") int page);
-
-    @GET("search_by_title")
-    Call<List<Song>> getSearchByTitle(@Query("[query]") String query, @Query("page") int page);
-
-    @GET("search_by_artist")
-    Call<List<Song>> getSearchByArtist(@Query("[query]") String query, @Query("page") int page);
-
-    @GET("search_by_lyrics")
-    Call<List<Song>> getSearchByLyrics(@Query("[query]") String query, @Query("page") int page);
+    @GET("search_by")
+    Call<List<Song>> getSearch(@Query("mytoken") String mytoken, @Query("query") String query, @Query("search_by") String search_by, @Query("page") int page);
 }
