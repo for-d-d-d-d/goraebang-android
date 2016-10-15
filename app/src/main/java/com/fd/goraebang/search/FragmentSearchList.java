@@ -64,7 +64,12 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView {
 
     @Override
     protected void loadData(int page){
-        swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
 
         if(page == 0 && items.size() > 0){
             items.clear();
