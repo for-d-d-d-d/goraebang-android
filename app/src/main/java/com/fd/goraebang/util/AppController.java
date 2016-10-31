@@ -7,12 +7,15 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 
 import com.crashlytics.android.Crashlytics;
+import com.fd.goraebang.R;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.consts.URL;
 import com.fd.goraebang.interfaces.AccountService;
 import com.fd.goraebang.interfaces.SongService;
 import com.fd.goraebang.model.User;
 import com.fd.goraebang.util.helper.PrimitiveConverterFactory;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.kakao.auth.ApprovalType;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.IApplicationConfig;
@@ -26,6 +29,8 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class AppController extends Application {
     private static volatile AppController instance = null;
     private static volatile Activity currentActivity = null;
+
+    private Tracker mTracker;
 
     public static int GRID_COLUMN_HEIGHT = 0; // 가로 3개 column 기준 같은 높이.
 
@@ -134,6 +139,14 @@ public class AppController extends Application {
     }
     public static void setCurrentActivity(Activity currentActivity) {
         AppController.currentActivity = currentActivity;
+    }
+
+    synchronized public Tracker getDefaultTracker() {
+        if (mTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            mTracker = analytics.newTracker(getResources().getString(R.string.ga_trackingId));
+        }
+        return mTracker;
     }
 
     @Override

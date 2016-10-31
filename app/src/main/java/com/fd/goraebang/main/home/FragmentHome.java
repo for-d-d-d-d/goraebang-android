@@ -3,7 +3,6 @@ package com.fd.goraebang.main.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.widget.LinearLayout;
 
 import com.fd.goraebang.R;

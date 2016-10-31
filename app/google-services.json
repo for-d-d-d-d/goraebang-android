@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "142201753891",
+    "project_id": "firebase-goraebang"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142201753891:android:77c7979bbb61aa4a",
+        "android_client_info": {
+          "package_name": "com.fd.goraebang"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq8uJ1Fw_FDg41-8PXo6rXvStm6OE_d94"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-67241922-14"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
