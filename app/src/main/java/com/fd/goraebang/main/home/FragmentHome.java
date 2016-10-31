@@ -9,7 +9,8 @@ import com.fd.goraebang.R;
 import com.fd.goraebang.custom.CustomFragment;
 import com.fd.goraebang.model.Banner;
 import com.fd.goraebang.model.Song;
-import com.fd.goraebang.search.ActivitySearch_;
+import com.fd.goraebang.song.ActivityNewChart_;
+import com.fd.goraebang.song.ActivityTopChart_;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.CustomProgressDialog;
@@ -24,6 +25,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -31,6 +33,8 @@ import retrofit2.Response;
 public class FragmentHome extends CustomFragment {
     @ViewById
     ViewPager viewPagerBanner, viewPagerTopChart, viewPagerNewChart;
+    @ViewById
+    CircleIndicator indicatorBanner, indicatorTopChart, indicatorNewChart;
 
     private List<Banner> itemsBanner = null;
     private ArrayList<Song> itemsTopChart = null;
@@ -63,10 +67,9 @@ public class FragmentHome extends CustomFragment {
 
     @AfterViews
     void afterViews() {
-        if (itemsBanner.size() == 0 || itemsTopChart.size() == 0 || itemsNewChart.size() == 0) {
-            loadData();
-        }
+        loadData();
 
+        dialog = Utils.createDialog(getActivity(), dialog);
         updateViewBanner();
         updateViewTopChart();
         updateViewNewChart();
@@ -74,7 +77,7 @@ public class FragmentHome extends CustomFragment {
 
     private void loadData() {
         dialog = Utils.createDialog(getActivity(), dialog);
-        {
+        if(itemsBanner.size() == 0) {
             // Banner
             Call<List<Banner>> call = AppController.getSongService().getMainBanner();
             call.enqueue(new CallUtils<List<Banner>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
@@ -94,12 +97,11 @@ public class FragmentHome extends CustomFragment {
                 @Override
                 public void onComplete() {
                     updateViewBanner();
-                    dialog = Utils.hideDialog(dialog);
                 }
             });
         }
 
-        {
+        if(itemsTopChart.size() == 0) {
             // Top Chart
             Call<List<Song>> call = AppController.getSongService().getTopChart(0);
             call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
@@ -119,12 +121,11 @@ public class FragmentHome extends CustomFragment {
                 @Override
                 public void onComplete() {
                     updateViewTopChart();
-                    dialog = Utils.hideDialog(dialog);
                 }
             });
         }
 
-        {
+        if(itemsNewChart.size() == 0) {
             // New Chart
             Call<List<Song>> call = AppController.getSongService().getMainNewChart();
             call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
@@ -144,7 +145,6 @@ public class FragmentHome extends CustomFragment {
                 @Override
                 public void onComplete() {
                     updateViewNewChart();
-                    dialog = Utils.hideDialog(dialog);
                 }
             });
         }
@@ -158,61 +158,64 @@ public class FragmentHome extends CustomFragment {
         }
 
         viewPagerBanner.setAdapter(adapterBanner);
+        indicatorBanner.setViewPager(viewPagerBanner);
     }
 
     private void updateViewTopChart() {
         adapterTopChart = new FragmentTabPagerAdapter(getChildFragmentManager());
 
         if(itemsTopChart.size() >= 6){
-            adapterTopChart.addFragment(FragmentHomeTopChart.newInstance(new ArrayList<Song>(itemsTopChart.subList(0, 6))), "A");
+            adapterTopChart.addFragment(FragmentHomeChart.newInstance(new ArrayList<Song>(itemsTopChart.subList(0, 6))), "A");
         }
         if(itemsTopChart.size() >= 12){
-            adapterTopChart.addFragment(FragmentHomeTopChart.newInstance(new ArrayList<Song>(itemsTopChart.subList(6, 12))), "B");
+            adapterTopChart.addFragment(FragmentHomeChart.newInstance(new ArrayList<Song>(itemsTopChart.subList(6, 12))), "B");
         }
         if(itemsTopChart.size() >= 18){
-            adapterTopChart.addFragment(FragmentHomeTopChart.newInstance(new ArrayList<Song>(itemsTopChart.subList(12, 18))), "C");
+            adapterTopChart.addFragment(FragmentHomeChart.newInstance(new ArrayList<Song>(itemsTopChart.subList(12, 18))), "C");
         }
 
         viewPagerTopChart.setAdapter(adapterTopChart);
+        indicatorTopChart.setViewPager(viewPagerTopChart);
 
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)viewPagerTopChart.getLayoutParams();
-        if(AppController.SCREEN_WIDTH > 0){
-            layoutParams.height = ((int)(AppController.SCREEN_WIDTH / 3) * 2) + 50;
-        }else{
-            layoutParams.height = 250;
-        }
+        layoutParams.height = (int)((AppController.GRID_COLUMN_HEIGHT + 10 * AppController.SCREEN_DENSITY) * 2);
+
+        hideDialog();
     }
 
     private void updateViewNewChart() {
         adapterNewChart = new FragmentTabPagerAdapter(getChildFragmentManager());
 
         if(itemsNewChart.size() >= 6){
-            adapterNewChart.addFragment(FragmentHomeNewChart.newInstance(new ArrayList<Song>(itemsNewChart.subList(0, 6))), "A");
+            adapterNewChart.addFragment(FragmentHomeChart.newInstance(new ArrayList<Song>(itemsNewChart.subList(0, 6))), "A");
         }
         if(itemsNewChart.size() >= 12){
-            adapterNewChart.addFragment(FragmentHomeNewChart.newInstance(new ArrayList<Song>(itemsNewChart.subList(6, 12))), "B");
+            adapterNewChart.addFragment(FragmentHomeChart.newInstance(new ArrayList<Song>(itemsNewChart.subList(6, 12))), "B");
         }
         if(itemsNewChart.size() >= 18){
-            adapterNewChart.addFragment(FragmentHomeNewChart.newInstance(new ArrayList<Song>(itemsNewChart.subList(12, 18))), "C");
+            adapterNewChart.addFragment(FragmentHomeChart.newInstance(new ArrayList<Song>(itemsNewChart.subList(12, 18))), "C");
         }
 
         viewPagerNewChart.setAdapter(adapterNewChart);
+        indicatorNewChart.setViewPager(viewPagerNewChart);
 
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)viewPagerNewChart.getLayoutParams();
-        if(AppController.SCREEN_WIDTH > 0){
-            layoutParams.height = ((int)(AppController.SCREEN_WIDTH / 3) * 2) + 50;
-        }else{
-            layoutParams.height = 250;
-        }
+        layoutParams.height = (int)((AppController.GRID_COLUMN_HEIGHT + 10 * AppController.SCREEN_DENSITY) * 2);
+
+        hideDialog();
+    }
+
+    private void hideDialog(){
+        dialog = Utils.hideDialog(dialog);
     }
 
     @Click(R.id.llTopChart)
     void onClickTopChart(){
-        startActivity(new Intent(getActivity(), ActivitySearch_.class));
+        startActivity(new Intent(getActivity(), ActivityTopChart_.class));
     }
 
     @Click(R.id.llNewChart)
     void onClickNewChart(){
-        startActivity(new Intent(getActivity(), ActivitySearch_.class));
+        startActivity(new Intent(getActivity(), ActivityNewChart_.class));
     }
 }

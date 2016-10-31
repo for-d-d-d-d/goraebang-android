@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
+
 
 repositories {
     maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
@@ -63,6 +65,7 @@ apt {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    compile "com.google.android.gms:play-services-analytics:9.0.0"
     compile "com.android.support:appcompat-v7:23.2.1"
     compile 'com.android.support:design:23.2.1'
     compile 'com.android.support:cardview-v7:23.2.1'
@@ -86,4 +89,5 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.3@aar') {
         transitive = true;
     }
+    compile 'me.relex:circleindicator:1.2.2@aar'
 }

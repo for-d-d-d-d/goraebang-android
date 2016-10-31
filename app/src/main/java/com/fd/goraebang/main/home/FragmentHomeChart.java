@@ -22,16 +22,16 @@ import org.androidannotations.annotations.ViewById;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-@EFragment(R.layout.fragment_tab_home_top_chart)
-public class FragmentHomeTopChart extends CustomFragment {
+@EFragment(R.layout.fragment_tab_home_chart)
+public class FragmentHomeChart extends CustomFragment {
     @ViewById
     RecyclerView recyclerView;
 
     private RecyclerView.Adapter adapter;
     private ArrayList<Song> items = null;
 
-    public static FragmentHomeTopChart newInstance(ArrayList<Song> items) {
-        FragmentHomeTopChart f = new FragmentHomeTopChart_();
+    public static FragmentHomeChart newInstance(ArrayList<Song> items) {
+        FragmentHomeChart f = new FragmentHomeChart_();
         Bundle b = new Bundle();
         b.putSerializable("items", (Serializable) items);
         f.setArguments(b);
@@ -64,7 +64,7 @@ public class FragmentHomeTopChart extends CustomFragment {
     private class OnItemClickListener extends RecyclerItemClickListener.SimpleOnItemClickListener{
         @Override
         public void onItemClick(View view, int position) {
-            FragmentHomeTopChart.this.onItemClick(view, position);
+            FragmentHomeChart.this.onItemClick(view, position);
         }
     }
 

@@ -27,8 +27,18 @@ public class User implements Serializable {
     private String myToken;
     @JsonProperty("result")
     private String result;
+    @JsonProperty("gender")
+    private String gender;
     @JsonProperty("mylist_count")
     private int mylistCount;
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
     public String getId() {
         return id;

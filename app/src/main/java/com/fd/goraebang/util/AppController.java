@@ -7,12 +7,15 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 
 import com.crashlytics.android.Crashlytics;
+import com.fd.goraebang.R;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.consts.URL;
 import com.fd.goraebang.interfaces.AccountService;
 import com.fd.goraebang.interfaces.SongService;
 import com.fd.goraebang.model.User;
 import com.fd.goraebang.util.helper.PrimitiveConverterFactory;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.kakao.auth.ApprovalType;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.IApplicationConfig;
@@ -27,8 +30,13 @@ public class AppController extends Application {
     private static volatile AppController instance = null;
     private static volatile Activity currentActivity = null;
 
+    private Tracker mTracker;
+
+    public static int GRID_COLUMN_HEIGHT = 0; // 가로 3개 column 기준 같은 높이.
+
     public static int SCREEN_WIDTH = 0;
     public static int SCREEN_HEIGHT = 0;
+    public static float SCREEN_DENSITY = 0;
     public static User USER = null;
     public static String USER_ID = null;
     public static String USER_MY_LIST_ID = null;
@@ -55,6 +63,11 @@ public class AppController extends Application {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         SCREEN_WIDTH = displayMetrics.widthPixels;
         SCREEN_HEIGHT = displayMetrics.heightPixels;
+        SCREEN_DENSITY = displayMetrics.density;
+
+        // 좌우 여백 10 + 각 아이템 별 좌우 여백 5 * 3 = 총 50
+        GRID_COLUMN_HEIGHT = (int)(SCREEN_WIDTH - (50 * AppController.SCREEN_DENSITY)) / 3;
+
         Fabric.with(this, new Crashlytics());
     }
 
@@ -126,6 +139,14 @@ public class AppController extends Application {
     }
     public static void setCurrentActivity(Activity currentActivity) {
         AppController.currentActivity = currentActivity;
+    }
+
+    synchronized public Tracker getDefaultTracker() {
+        if (mTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            mTracker = analytics.newTracker(getResources().getString(R.string.ga_trackingId));
+        }
+        return mTracker;
     }
 
     @Override

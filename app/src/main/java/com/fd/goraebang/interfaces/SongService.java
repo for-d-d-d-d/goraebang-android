@@ -3,6 +3,8 @@ package com.fd.goraebang.interfaces;
 import com.fd.goraebang.model.Banner;
 import com.fd.goraebang.model.Song;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -30,4 +32,7 @@ public interface SongService {
 
     @GET("search_by")
     Call<List<Song>> getSearch(@Query("mytoken") String mytoken, @Query("query") String query, @Query("search_by") String search_by, @Query("page") int page);
+
+    @GET("search_by")
+    Call<List<HashMap<String,ArrayList<String>>>> getSearchAutoComplete(@Query("mytoken") String mytoken, @Query("query") String query, @Query("search_by") String search_by, @Query("page") int page, @Query("auto_complete") boolean auto_complete);
 }

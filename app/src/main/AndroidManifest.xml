@@ -21,17 +21,42 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.ActivityLaunchScreen_" android:theme="@style/AppThemeLaunchScreen">
+        <activity android:name=".main.ActivityLaunchScreen_"
+                  android:theme="@style/AppThemeLaunchScreen"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".main.ActivityMain_" />
-        <activity android:name=".account.ActivityAccountLogin_" android:theme="@style/AppThemeBlack"/>
-        <activity android:name=".account.ActivityAccountRegister_" android:theme="@style/AppThemeBlack"/>
-        <activity android:name=".song.ActivitySongDetail_"/>
-        <activity android:name=".search.ActivitySearch_"/>
+        <activity android:name=".main.ActivityMain_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".account.ActivityAccountLogin_"
+                  android:theme="@style/AppThemeBlack"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".account.ActivityAccountRegister_"
+                  android:theme="@style/AppThemeBlack"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".song.ActivitySongDetail_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".song.ActivityTopChart_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".song.ActivityNewChart_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".common.ActivityWebview_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".search.ActivitySearch_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".main.setting.ActivityVersion_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".main.mypage.ActivityMyProfile_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".main.mypage.ActivityChangePassword_"
+                  android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="0b3bc1a8787033fe9f36beaef0693659b1568ee7" />

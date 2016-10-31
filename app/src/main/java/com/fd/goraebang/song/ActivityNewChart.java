@@ -1,4 +1,4 @@
-package com.fd.goraebang.search;
+package com.fd.goraebang.song;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,15 +6,14 @@ import android.view.View;
 
 import com.fd.goraebang.R;
 import com.fd.goraebang.consts.CONST;
-import com.fd.goraebang.custom.CustomFragmentWithRecyclerView;
+import com.fd.goraebang.custom.CustomActivityWithRecyclerView;
 import com.fd.goraebang.model.Song;
-import com.fd.goraebang.song.ActivitySongDetail_;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.adapter.RecyclerAdapterSong;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.EActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,35 +21,23 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Response;
 
-@EFragment(R.layout.fragment_layout_recycler_view)
-public class FragmentSearchList extends CustomFragmentWithRecyclerView {
+@EActivity(R.layout.activity_chart)
+public class ActivityNewChart extends CustomActivityWithRecyclerView {
     private List<Song> items = new ArrayList<>();
-    private String keyword = null;
-    private String type = null;
-
-    public static FragmentSearchList newInstance(String type, String keyword) {
-        FragmentSearchList f = new FragmentSearchList_();
-        Bundle b = new Bundle();
-        b.putString("type", type);
-        b.putString("keyword", keyword);
-        f.setArguments(b);
-        return f;
-    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
-        type = getArguments().getString("type");
-        keyword = getArguments().getString("keyword");
-
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if(adapter == null) {
-            adapter = new RecyclerAdapterSong(getActivity(), items);
+            adapter = new RecyclerAdapterSong(this, items);
         }
     }
-
+    
     @AfterViews
-    void init(){
+    void afterViews(){
+        setToolbar("이달의 최신곡", 0, R.drawable.ic_arrow_back_white_24dp, 0, 0);
+
         if(adapter == null)
             return;
 
@@ -63,11 +50,7 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView {
     }
 
     @Override
-    protected void loadData(int page){
-        if(keyword == null || keyword.length() < 1){
-            return;
-        }
-
+    protected void loadData(int page) {
         swipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -75,53 +58,42 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView {
             }
         });
 
-        if(page == 0 && items.size() > 0){
+        if(page == 0)
             items.clear();
-        }
 
-        Call<List<Song>> call = AppController.getSongService().getSearch(AppController.USER_TOKEN, keyword, type.toLowerCase(), page);
-        call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
+        Call<List<Song>> call = AppController.getSongService().getTopChart(page);
+        call.enqueue(new CallUtils<List<Song>>(call, this, getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().size() > 0) {
-                    items.addAll(response.body());
-                }
                 onComplete();
+                if (response.isSuccessful() && response.body() != null) {
+                    items.addAll(response.body());
+                    updateView();
+                }
             }
 
             @Override
             public void onFailure(Call<List<Song>> call, Throwable t) {
-                onComplete();
+
             }
 
             @Override
             public void onComplete() {
                 swipeRefreshLayout.setRefreshing(false);
-                updateView();
             }
         });
-    }
-
-    protected void searchKeyword(String keyword){
-        items.clear();
-        this.keyword = keyword;
-
-        loadData(0);
     }
 
     void updateView(){
         setMessage("");
         adapter.notifyDataSetChanged();
-
         if(items.size() == 0){
-            setMessage("검색결과가 없습니다.");
+            setMessage("등록된 노래가 없거나 불러오지 못 했습니다.");
         }
     }
 
     @Override
     protected void onRefresh() {
-        items.clear();
-        adapter.notifyDataSetChanged();
         loadData(0);
     }
 
@@ -130,7 +102,7 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView {
         if(items.size() < position)
             return;
 
-        Intent intent = new Intent(getActivity(), ActivitySongDetail_.class);
+        Intent intent = new Intent(this, ActivitySongDetail_.class);
         intent.putExtra("song", items.get(position));
         startActivityForResult(intent, CONST.RQ_CODE_SONG_DETAIL);
     }

@@ -10,7 +10,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -22,11 +21,17 @@ import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomActivityWithToolbar;
 import com.fd.goraebang.main.home.FragmentHome;
 import com.fd.goraebang.main.mypage.FragmentMyPage;
+import com.fd.goraebang.main.setting.FragmentSettings;
+import com.fd.goraebang.model.User;
 import com.fd.goraebang.util.AppController;
+import com.fd.goraebang.util.CallUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 @EActivity(R.layout.activity_main)
 public class ActivityMain extends CustomActivityWithToolbar {
@@ -58,7 +63,6 @@ public class ActivityMain extends CustomActivityWithToolbar {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         pref = getSharedPreferences(CONST.PREF_NAME, MODE_PRIVATE);
         editor = pref.edit();
     }
@@ -91,13 +95,30 @@ public class ActivityMain extends CustomActivityWithToolbar {
         }
 
         tabLayout.getTabAt(3).getCustomView().setSelected(true);
+
+        loadUser();
     }
 
-    public void updateTabSelection(int position) {
-        Log.d("aaaaaa","position : " + position);
-        tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).getCustomView().setSelected(false);
-        tabLayout.getTabAt(position).getCustomView().setSelected(true);
-        tabLayout.setScrollPosition(position, 0, true);
+    private void loadUser() {
+        Call<User> call = AppController.getAccountService().me(AppController.USER_TOKEN);
+        call.enqueue(new CallUtils<User>(call, this, getResources().getString(R.string.msgErrorCommon)) {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    AppController.USER = response.body();
+                }
+                onComplete();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                onComplete();
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        });
     }
 
     private class onTabSelectListener implements TabLayout.OnTabSelectedListener{
@@ -170,7 +191,7 @@ public class ActivityMain extends CustomActivityWithToolbar {
         }
     }
 
-    private void logout(){
+    public void logout(){
         AppController.USER = null;
         AppController.USER_ID = null;
         AppController.USER_MY_LIST_ID = null;
@@ -189,9 +210,6 @@ public class ActivityMain extends CustomActivityWithToolbar {
         Intent intent = null;
 
         switch(v.getId()){
-            case R.id.btnLogout:
-                logout();
-                break;
             default :
                 break;
         }

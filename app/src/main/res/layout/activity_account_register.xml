@@ -103,7 +103,7 @@
                 android:layout_height="45dp"
                 android:background="@color/colorPrimary"
                 android:onClick="onClick"
-                android:text="Login"
+                android:text="SIGN UP"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_bold"/>
 
