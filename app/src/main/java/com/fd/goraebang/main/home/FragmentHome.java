@@ -9,7 +9,8 @@ import com.fd.goraebang.R;
 import com.fd.goraebang.custom.CustomFragment;
 import com.fd.goraebang.model.Banner;
 import com.fd.goraebang.model.Song;
-import com.fd.goraebang.search.ActivitySearch_;
+import com.fd.goraebang.song.ActivityNewChart_;
+import com.fd.goraebang.song.ActivityTopChart_;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.CustomProgressDialog;
@@ -210,11 +211,11 @@ public class FragmentHome extends CustomFragment {
 
     @Click(R.id.llTopChart)
     void onClickTopChart(){
-        startActivity(new Intent(getActivity(), ActivitySearch_.class));
+        startActivity(new Intent(getActivity(), ActivityTopChart_.class));
     }
 
     @Click(R.id.llNewChart)
     void onClickNewChart(){
-        startActivity(new Intent(getActivity(), ActivitySearch_.class));
+        startActivity(new Intent(getActivity(), ActivityNewChart_.class));
     }
 }
