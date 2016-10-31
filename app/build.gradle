@@ -86,4 +86,5 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.3@aar') {
         transitive = true;
     }
+    compile 'me.relex:circleindicator:1.2.2@aar'
 }

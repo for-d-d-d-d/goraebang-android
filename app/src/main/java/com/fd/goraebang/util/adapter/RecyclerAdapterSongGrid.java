@@ -20,7 +20,6 @@ import java.util.List;
 public class RecyclerAdapterSongGrid extends RecyclerView.Adapter<RecyclerAdapterSongGrid.ViewHolder> {
     private List<Song> mValues;
     private Context mContext;
-    private boolean isBackgroundGradient;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public final View mView;
@@ -44,20 +43,11 @@ public class RecyclerAdapterSongGrid extends RecyclerView.Adapter<RecyclerAdapte
     public RecyclerAdapterSongGrid(Context context, List<Song> items) {
         this.mValues = items;
         this.mContext = context;
-        this.isBackgroundGradient = false;
-    }
-    public RecyclerAdapterSongGrid(Context context, List<Song> items, boolean isBackgroundGradient) {
-        this.mValues = items;
-        this.mContext = context;
-        this.isBackgroundGradient = isBackgroundGradient;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int layout = R.layout.layout_item_recycler_song_grid;
-        if(this.isBackgroundGradient)
-            layout = R.layout.layout_item_recycler_song_grid_gradient;
-
         View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         return new ViewHolder(view);
     }
@@ -67,11 +57,7 @@ public class RecyclerAdapterSongGrid extends RecyclerView.Adapter<RecyclerAdapte
         final Song item = mValues.get(position);
 
         GridLayoutManager.LayoutParams layoutParams = (GridLayoutManager.LayoutParams)holder.cardView.getLayoutParams();
-        if(AppController.SCREEN_WIDTH > 0){
-            layoutParams.height = (int)(AppController.SCREEN_WIDTH / 3);
-        }else{
-            layoutParams.height = 480;
-        }
+        layoutParams.height = AppController.GRID_COLUMN_HEIGHT;
 
         holder.tvTitle.setText(item.getTitle());
         holder.tvArtist.setText(item.getArtistName());

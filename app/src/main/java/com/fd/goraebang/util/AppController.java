@@ -27,8 +27,11 @@ public class AppController extends Application {
     private static volatile AppController instance = null;
     private static volatile Activity currentActivity = null;
 
+    public static int GRID_COLUMN_HEIGHT = 0; // 가로 3개 column 기준 같은 높이.
+
     public static int SCREEN_WIDTH = 0;
     public static int SCREEN_HEIGHT = 0;
+    public static float SCREEN_DENSITY = 0;
     public static User USER = null;
     public static String USER_ID = null;
     public static String USER_MY_LIST_ID = null;
@@ -55,6 +58,11 @@ public class AppController extends Application {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         SCREEN_WIDTH = displayMetrics.widthPixels;
         SCREEN_HEIGHT = displayMetrics.heightPixels;
+        SCREEN_DENSITY = displayMetrics.density;
+
+        // 좌우 여백 10 + 각 아이템 별 좌우 여백 5 * 3 = 총 50
+        GRID_COLUMN_HEIGHT = (int)(SCREEN_WIDTH - (50 * AppController.SCREEN_DENSITY)) / 3;
+
         Fabric.with(this, new Crashlytics());
     }
 

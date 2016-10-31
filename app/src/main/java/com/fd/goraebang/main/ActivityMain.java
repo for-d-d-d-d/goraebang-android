@@ -58,7 +58,7 @@ public class ActivityMain extends CustomActivityWithToolbar {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Log.d("aaaaaa", getLocalClassName() + " : activity onCreate");
         pref = getSharedPreferences(CONST.PREF_NAME, MODE_PRIVATE);
         editor = pref.edit();
     }
@@ -66,6 +66,7 @@ public class ActivityMain extends CustomActivityWithToolbar {
     @AfterViews
     void afterViews(){
         setToolbar("고래방", 0, 0, 0, 0);
+        Log.d("aaaaaa",getLocalClassName() + " : activity afterViews");
 
         tabLayout.setOnTabSelectedListener(new onTabSelectListener());
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -73,6 +74,7 @@ public class ActivityMain extends CustomActivityWithToolbar {
         if(fm == null)
             fm = getSupportFragmentManager();
 
+        Log.d("aaaaaa",getLocalClassName() + " : activity newInstance");
         fragmentHome = FragmentHome.newInstance();
         fragmentSearch = FragmentSearch.newInstance();
         fragmentRecommend = FragmentRecommend.newInstance();
@@ -93,13 +95,6 @@ public class ActivityMain extends CustomActivityWithToolbar {
         tabLayout.getTabAt(3).getCustomView().setSelected(true);
     }
 
-    public void updateTabSelection(int position) {
-        Log.d("aaaaaa","position : " + position);
-        tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).getCustomView().setSelected(false);
-        tabLayout.getTabAt(position).getCustomView().setSelected(true);
-        tabLayout.setScrollPosition(position, 0, true);
-    }
-
     private class onTabSelectListener implements TabLayout.OnTabSelectedListener{
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
@@ -112,6 +107,7 @@ public class ActivityMain extends CustomActivityWithToolbar {
             selectedTab = (TextView)tab.getCustomView();
             selectedTab.setTextColor(getResources().getColor(R.color.red));
             selectedTab.setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
+            Log.d("aaaaaa",getLocalClassName() + " : activity onTabSelected : " + tabPosition);
 
             switch(tabPosition){
                 case 0:
