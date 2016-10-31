@@ -11,7 +11,7 @@ import com.fd.goraebang.R;
 
 import java.util.List;
 
-public class RecyclerAdapterSetting extends RecyclerView.Adapter<RecyclerAdapterSetting.ViewHolder> {
+public class RecyclerAdapterText extends RecyclerView.Adapter<RecyclerAdapterText.ViewHolder> {
     private List<String> mValues;
     private Context mContext;
 
@@ -26,7 +26,7 @@ public class RecyclerAdapterSetting extends RecyclerView.Adapter<RecyclerAdapter
         }
     }
 
-    public RecyclerAdapterSetting(Context context, List<String> items) {
+    public RecyclerAdapterText(Context context, List<String> items) {
         this.mContext = context;
         this.mValues = items;
     }
@@ -34,7 +34,7 @@ public class RecyclerAdapterSetting extends RecyclerView.Adapter<RecyclerAdapter
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_item_recycler_setting, parent, false);
+                .inflate(R.layout.layout_item_recycler_text, parent, false);
         return new ViewHolder(view);
     }
 

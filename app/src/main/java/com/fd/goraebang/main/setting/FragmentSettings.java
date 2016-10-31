@@ -11,7 +11,7 @@ import com.fd.goraebang.main.ActivityMain;
 import com.fd.goraebang.main.mypage.ActivityMyProfile_;
 import com.fd.goraebang.util.CustomAlertDialog;
 import com.fd.goraebang.util.Utils;
-import com.fd.goraebang.util.adapter.RecyclerAdapterSetting;
+import com.fd.goraebang.util.adapter.RecyclerAdapterText;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -35,7 +35,7 @@ public class FragmentSettings extends CustomFragmentWithRecyclerView {
         super.onCreate(savedInstanceState);
 
         if(adapter == null) {
-            adapter = new RecyclerAdapterSetting(getActivity(), items);
+            adapter = new RecyclerAdapterText(getActivity(), items);
         }
     }
 
