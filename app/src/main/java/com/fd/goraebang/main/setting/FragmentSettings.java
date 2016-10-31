@@ -132,6 +132,6 @@ public class FragmentSettings extends CustomFragmentWithRecyclerView {
 
     @Override
     protected void onRefresh() {
-
+        updateView();
     }
 }

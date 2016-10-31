@@ -2,4 +2,9 @@
     <string name="app_name">고래방</string>
     <string name="is_finish">한번 더 누르시면 종료됩니다.</string>
     <string name="msgErrorCommon">문제가 발생했습니다. 다시 시도해주세요.</string>
+
+    <string name="permission_title_rationale">권한 요청</string>
+    <string name="permission_write_storage_rationale">고래방의 사진, 미디어, 파일 사용 작업 수행을 허용하시겠습니까?</string>
+    <string name="label_ok">허용</string>
+    <string name="label_cancel">거부</string>
 </resources>

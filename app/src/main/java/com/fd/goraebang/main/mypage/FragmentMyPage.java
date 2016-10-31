@@ -17,9 +17,7 @@ import com.bumptech.glide.Glide;
 import com.fd.goraebang.R;
 import com.fd.goraebang.account.ActivityAccountLogin_;
 import com.fd.goraebang.custom.CustomFragment;
-import com.fd.goraebang.model.User;
 import com.fd.goraebang.util.AppController;
-import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.adapter.FragmentTabPagerAdapter;
 
 import org.androidannotations.annotations.AfterViews;
@@ -29,8 +27,6 @@ import org.androidannotations.annotations.ViewById;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.BlurTransformation;
-import retrofit2.Call;
-import retrofit2.Response;
 
 @EFragment(R.layout.fragment_tab_mypage)
 public class FragmentMyPage extends CustomFragment implements AppBarLayout.OnOffsetChangedListener {
@@ -100,30 +96,7 @@ public class FragmentMyPage extends CustomFragment implements AppBarLayout.OnOff
         appbar.addOnOffsetChangedListener(this);
         mMaxScrollSize = appbar.getTotalScrollRange();
 
-        loadUser();
-    }
-    private void loadUser() {
-
-        Call<User> call = AppController.getAccountService().me(AppController.USER_TOKEN);
-        call.enqueue(new CallUtils<User>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    AppController.USER = response.body();
-                }
-                onComplete();
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                onComplete();
-            }
-
-            @Override
-            public void onComplete() {
-                updateView();
-            }
-        });
+        updateView();
     }
 
     private void updateView(){
@@ -137,7 +110,7 @@ public class FragmentMyPage extends CustomFragment implements AppBarLayout.OnOff
                         .into(ivProfileBackground);
 
             tvName.setText(AppController.USER.getName());
-            tvMyListCount.setText(AppController.USER.getMylistCount() + "");
+            tvMyListCount.setText(String.format("저장된 곡의 개수 %d", AppController.USER.getMylistCount()));
         }
     }
 

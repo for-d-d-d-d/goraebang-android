@@ -22,11 +22,16 @@ import com.fd.goraebang.custom.CustomActivityWithToolbar;
 import com.fd.goraebang.main.home.FragmentHome;
 import com.fd.goraebang.main.mypage.FragmentMyPage;
 import com.fd.goraebang.main.setting.FragmentSettings;
+import com.fd.goraebang.model.User;
 import com.fd.goraebang.util.AppController;
+import com.fd.goraebang.util.CallUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 @EActivity(R.layout.activity_main)
 public class ActivityMain extends CustomActivityWithToolbar {
@@ -90,6 +95,30 @@ public class ActivityMain extends CustomActivityWithToolbar {
         }
 
         tabLayout.getTabAt(3).getCustomView().setSelected(true);
+
+        loadUser();
+    }
+
+    private void loadUser() {
+        Call<User> call = AppController.getAccountService().me(AppController.USER_TOKEN);
+        call.enqueue(new CallUtils<User>(call, this, getResources().getString(R.string.msgErrorCommon)) {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    AppController.USER = response.body();
+                }
+                onComplete();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                onComplete();
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        });
     }
 
     private class onTabSelectListener implements TabLayout.OnTabSelectedListener{
