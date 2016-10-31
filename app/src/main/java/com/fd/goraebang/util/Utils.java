@@ -139,4 +139,16 @@ public class Utils {
 
         return result;
     }
+
+
+    public static void sendEmail(Context context, String subject){
+        String content = "내용을 입력하세요.";
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", CONST.EMAIL, null));
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, content);
+        try {
+            context.startActivity(Intent.createChooser(intent, "[" + subject + "] 을(를) 전송할 이메일 앱을 선택해주세요."));
+        }catch (Exception e){ }
+    }
 }

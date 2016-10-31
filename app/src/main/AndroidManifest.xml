@@ -33,7 +33,10 @@
         <activity android:name=".song.ActivitySongDetail_"/>
         <activity android:name=".song.ActivityTopChart_"/>
         <activity android:name=".song.ActivityNewChart_"/>
+        <activity android:name=".common.ActivityWebview_"/>
         <activity android:name=".search.ActivitySearch_"/>
+        <activity android:name=".main.setting.ActivityVersion_"/>
+        <activity android:name=".main.mypage.ActivityMyProfile_"/>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="0b3bc1a8787033fe9f36beaef0693659b1568ee7" />

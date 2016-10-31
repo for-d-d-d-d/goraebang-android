@@ -64,6 +64,10 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView {
 
     @Override
     protected void loadData(int page){
+        if(keyword == null || keyword.length() < 1){
+            return;
+        }
+
         swipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -73,10 +77,6 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView {
 
         if(page == 0 && items.size() > 0){
             items.clear();
-        }
-
-        if(keyword == null || keyword.length() < 1){
-            return;
         }
 
         Call<List<Song>> call = AppController.getSongService().getSearch(AppController.USER_TOKEN, keyword, type.toLowerCase(), page);
