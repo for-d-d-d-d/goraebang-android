@@ -92,11 +92,10 @@ public class ActivityAccountRegister extends CustomActivity {
         final String passwordConfirm = etPasswordConfirm.getText().toString();
 
         dialog = Utils.createDialog(this, dialog);
-        Call<User> call = AppController.getAccountService().register(email, "Park", "0", password, passwordConfirm);
+        Call<User> call = AppController.getAccountService().register(email, null, null, password, passwordConfirm);
         call.enqueue(new CallUtils<User>(call, this, getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                dialog = Utils.hideDialog(dialog);
                 if (response.isSuccessful() && response.body().getResult().equals("SUCCESS")) {
                     AppController.USER = response.body();
                     AppController.USER_ID = response.body().getId();
@@ -104,15 +103,22 @@ public class ActivityAccountRegister extends CustomActivity {
                     AppController.USER_TOKEN = response.body().getMyToken();
 
                     saveUserDataAndGoNext(email, password);
+                    showToast("회원가입에 성공했습니다.");
                 } else {
-                    showToast(msg);
+                    showToast(response.body().getMessage());
                 }
+                onComplete();
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                dialog = Utils.hideDialog(dialog);
+            public void onFailure(Call<User> call, Throwable t){
                 showToast(msg);
+                onComplete();
+            }
+
+            @Override
+            public void onComplete() {
+                dialog = Utils.hideDialog(dialog);
             }
         });
     }
@@ -125,8 +131,16 @@ public class ActivityAccountRegister extends CustomActivity {
         editor.putString("password", password);
         editor.commit();
 
-        startActivity(new Intent(ActivityAccountRegister.this, ActivityMain_.class));
         finish();
+    }
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent(getApplicationContext(), ActivityMain_.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        super.finish();
     }
 
     public void onClick(View v) {

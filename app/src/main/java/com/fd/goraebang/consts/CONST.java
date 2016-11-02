@@ -10,4 +10,6 @@ public class CONST {
     // RQ : Request.
     public static final int RQ_CODE_SONG_DETAIL = 1;
     public static final int RQ_CODE_SELECT_IMAGE = 2;
+
+    public static final int LONG_CLICK_LISTENER = 2910421;
 }

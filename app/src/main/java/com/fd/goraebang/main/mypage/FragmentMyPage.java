@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.fd.goraebang.R;
-import com.fd.goraebang.account.ActivityAccountLogin_;
 import com.fd.goraebang.custom.CustomFragment;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.adapter.FragmentTabPagerAdapter;
@@ -116,8 +115,7 @@ public class FragmentMyPage extends CustomFragment implements AppBarLayout.OnOff
 
     @Click(R.id.btnSetting)
     void onClickProfile(){
-        Intent intent = new Intent(getActivity(), ActivityAccountLogin_.class);
-        intent.putExtra("user", AppController.USER);
+        Intent intent = new Intent(getActivity(), ActivityMyProfile_.class);
         startActivity(intent);
     }
 

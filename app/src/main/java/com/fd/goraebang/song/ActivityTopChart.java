@@ -11,6 +11,7 @@ import com.fd.goraebang.model.Song;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.adapter.RecyclerAdapterSong;
+import com.fd.goraebang.util.listener.CallbackFavoriteListener;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -22,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 @EActivity(R.layout.activity_chart)
-public class ActivityTopChart extends CustomActivityWithRecyclerView {
+public class ActivityTopChart extends CustomActivityWithRecyclerView implements CallbackFavoriteListener{
     private List<Song> items = new ArrayList<>();
 
     @Override
@@ -30,7 +31,7 @@ public class ActivityTopChart extends CustomActivityWithRecyclerView {
         super.onCreate(savedInstanceState);
 
         if(adapter == null) {
-            adapter = new RecyclerAdapterSong(this, items);
+            adapter = new RecyclerAdapterSong(this, items, this);
         }
     }
     
@@ -105,5 +106,10 @@ public class ActivityTopChart extends CustomActivityWithRecyclerView {
         Intent intent = new Intent(this, ActivitySongDetail_.class);
         intent.putExtra("song", items.get(position));
         startActivityForResult(intent, CONST.RQ_CODE_SONG_DETAIL);
+    }
+
+    @Override
+    public void onClick(int viewId, int position) {
+
     }
 }

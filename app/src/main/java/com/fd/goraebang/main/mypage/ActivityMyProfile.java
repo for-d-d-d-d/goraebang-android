@@ -2,6 +2,7 @@ package com.fd.goraebang.main.mypage;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +20,9 @@ import com.bumptech.glide.Glide;
 import com.fd.goraebang.R;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomActivityWithToolbar;
+import com.fd.goraebang.model.User;
 import com.fd.goraebang.util.AppController;
+import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.CustomProgressDialog;
 import com.fd.goraebang.util.Utils;
 import com.yalantis.ucrop.UCrop;
@@ -38,6 +41,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Response;
 
 @EActivity(R.layout.activity_my_profile)
 public class ActivityMyProfile extends CustomActivityWithToolbar{
@@ -50,6 +55,9 @@ public class ActivityMyProfile extends CustomActivityWithToolbar{
     @ViewById
     EditText etName;
 
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
+
     private CustomProgressDialog dialog = null;
     private Uri imageUri;
     private String userName, userGender;
@@ -57,6 +65,9 @@ public class ActivityMyProfile extends CustomActivityWithToolbar{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        pref = getSharedPreferences(CONST.PREF_NAME, MODE_PRIVATE);
+        editor = pref.edit();
     }
     
     @AfterViews
@@ -88,11 +99,11 @@ public class ActivityMyProfile extends CustomActivityWithToolbar{
             return;
         }
 
-        if (userGender.equals("남자")) {
+        if (userGender.equals("1")) {
             tvGenderMale.setTextColor(getResources().getColor(R.color.white));
-        } else if (userGender.equals("여자")) {
+        } else if (userGender.equals("2")) {
             tvGenderFemale.setTextColor(getResources().getColor(R.color.white));
-        } else if (userGender.equals("기타")) {
+        } else if (userGender.equals("3")) {
             tvGenderETC.setTextColor(getResources().getColor(R.color.white));
         }
     }
@@ -189,16 +200,51 @@ public class ActivityMyProfile extends CustomActivityWithToolbar{
         dialog = Utils.createDialog(this, dialog);
         Log.d("GORAEBANG", "update user file : " + file);
 
-        Utils.showGlobalToast(this, "저장되었습니다.");
+        dialog = Utils.createDialog(this, dialog);
+        Call<User> call = AppController.getAccountService().modify(
+                AppController.USER_TOKEN,
+                name,
+                gender,
+                null,
+                null,
+                null,
+                null
+        );
+
+        call.enqueue(new CallUtils<User>(call, this, getResources().getString(R.string.msgErrorCommon)) {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body().getResult().equals("SUCCESS")) {
+                    AppController.USER.setName(response.body().getName());
+                    AppController.USER.setGender(response.body().getGender());
+                    AppController.USER.setImage(response.body().getImage());
+                    onComplete();
+                    showToast("저장되었습니다.");
+                } else {
+                    showToast(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                showToast(msg);
+                onComplete();
+            }
+
+            @Override
+            public void onComplete() {
+                dialog = Utils.hideDialog(dialog);
+            }
+        });
     }
 
     private void updateUserGender(int id){
         if(id == R.id.tvGenderMale){
-            userGender = "남자";
+            userGender = "1";
         }else if(id == R.id.tvGenderFemale){
-            userGender = "여자";
+            userGender = "2";
         }else if(id == R.id.tvGenderETC){
-            userGender = "기타";
+            userGender = "3";
         }
 
         updateView();
@@ -208,10 +254,11 @@ public class ActivityMyProfile extends CustomActivityWithToolbar{
         Intent intent = null;
 
         switch(v.getId()){
-            case R.id.btnBack:
+            case R.id.btnLeft:
                 finish();
                 break;
             case R.id.btnComplete:
+                userName = etName.getText().toString();
                 updateUser(null, userName, userGender);
                 break;
             case R.id.btnSetting:
@@ -225,6 +272,7 @@ public class ActivityMyProfile extends CustomActivityWithToolbar{
             case R.id.tvGenderMale:
             case R.id.tvGenderFemale:
             case R.id.tvGenderETC:
+                userName = etName.getText().toString();
                 updateUserGender(v.getId());
                 break;
             case R.id.tvChangePassword:

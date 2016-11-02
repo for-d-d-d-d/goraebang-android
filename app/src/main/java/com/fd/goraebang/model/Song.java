@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Song implements Serializable {
+public class Song extends Default implements Serializable {
     @JsonProperty("id")
     private int id;
     @JsonProperty("album_id")
