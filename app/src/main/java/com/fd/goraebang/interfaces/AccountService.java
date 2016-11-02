@@ -24,4 +24,17 @@ public interface AccountService {
 
     @GET("my_account/")
     Call<User> me(@Query("mytoken") String token);
+
+
+    //@Multipart
+    @GET("user_modify/")
+    Call<User> modify(@Query("mytoken") String mytoken,
+                        @Query("user[name]") String name,
+                        @Query("user[gender]") String gender,
+                        @Query("current_password") String current_password,
+                        @Query("new_password") String new_password,
+                        @Query("new_password_confirm") String new_password_confirm,
+                        @Query("upload_img") String img
+                        //@Query("image\"; filename=\"user_profile.jpg\" ") RequestBody file
+    );
 }

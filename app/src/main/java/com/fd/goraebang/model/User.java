@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User implements Serializable {
+public class User extends Default implements Serializable {
     @JsonProperty("id")
     private String id;
     @JsonProperty("mylist_id")
@@ -25,8 +25,6 @@ public class User implements Serializable {
     private String socialId;
     @JsonProperty("mytoken")
     private String myToken;
-    @JsonProperty("result")
-    private String result;
     @JsonProperty("gender")
     private String gender;
     @JsonProperty("mylist_count")
@@ -102,14 +100,6 @@ public class User implements Serializable {
 
     public void setMyToken(String myToken) {
         this.myToken = myToken;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
     }
 
     public String getThumbnail() {

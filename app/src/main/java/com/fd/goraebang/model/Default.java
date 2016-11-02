@@ -10,6 +10,16 @@ public class Default{
     private String type;
     @JsonProperty("data")
     private String data;
+    @JsonProperty("message")
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public String getResult() {
         return result;

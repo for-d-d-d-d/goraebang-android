@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.fd.goraebang.main.ActivityMain_;
 import com.fd.goraebang.R;
 import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomActivity;
+import com.fd.goraebang.main.ActivityMain_;
 import com.fd.goraebang.model.User;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.CallUtils;
@@ -80,15 +80,22 @@ public class ActivityAccountLogin extends CustomActivity {
                     AppController.USER_TOKEN = response.body().getMyToken();
 
                     saveUserDataAndGoNext(email, password);
+                    showToast("로그인에 성공했습니다.");
                 } else {
-                    showToast("아이디 혹은 비밀번호가 정확하지 않습니다.");
+                    showToast(response.body().getMessage());
                 }
+                onComplete();
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                dialog = Utils.hideDialog(dialog);
                 showToast(msg);
+                onComplete();
+            }
+
+            @Override
+            public void onComplete() {
+                dialog = Utils.hideDialog(dialog);
             }
         });
     }
