@@ -1,13 +1,16 @@
 package com.fd.goraebang.search;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -60,7 +63,7 @@ public class ActivitySearch extends CustomActivityWithToolbar {
 
     @AfterViews
     void afterViews(){
-        setToolbar("상세보기", 0, R.drawable.ic_arrow_back_white_24dp, R.drawable.ic_local_bar_white_24dp, 0);
+        setToolbar("검색", 0, R.drawable.ic_arrow_back_white_24dp, R.drawable.ic_local_bar_white_24dp, 0);
 
         if(adapter == null){
             adapter = new FragmentTabPagerAdapter(getSupportFragmentManager());
@@ -126,7 +129,7 @@ public class ActivitySearch extends CustomActivityWithToolbar {
         });
 
         String keyword = etSearch.getText().toString();
-        Call<List<HashMap<String, ArrayList<String>>>> call = AppController.getSongService().getSearchAutoComplete(AppController.USER_TOKEN, keyword, "title", 0, true);
+        Call<List<HashMap<String, ArrayList<String>>>> call = AppController.getSongService().getSearchByAutoComplete(AppController.USER_TOKEN, keyword, "title", 0, true);
         call.enqueue(new CallUtils<List<HashMap<String, ArrayList<String>>>>(call, this, getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<List<HashMap<String, ArrayList<String>>>> call, Response<List<HashMap<String, ArrayList<String>>>> response) {
@@ -172,6 +175,20 @@ public class ActivitySearch extends CustomActivityWithToolbar {
     protected void setupSwipeRefreshLayout(){
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshListener());
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+    }
+
+    private void openFilter(){
+        String filters[] = {"장르별", "연도별", "성별"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("조건 검색")
+                .setItems(filters, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("aaaaaa","aaa : " + which);
+                    }
+                });
+        
+        builder.show();
     }
 
     private class SwipeRefreshListener implements SwipeRefreshLayout.OnRefreshListener{
@@ -246,7 +263,7 @@ public class ActivitySearch extends CustomActivityWithToolbar {
                 onClickSearch();
                 break;
             case R.id.btnRight:
-                onClickSearch();
+                openFilter();
                 break;
             default :
                 break;

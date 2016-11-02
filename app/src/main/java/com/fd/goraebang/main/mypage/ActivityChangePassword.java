@@ -95,7 +95,7 @@ public class ActivityChangePassword extends CustomActivityWithToolbar{
         Intent intent = null;
 
         switch(v.getId()){
-            case R.id.btnBack:
+            case R.id.btnLeft:
                 finish();
                 break;
             case R.id.btnComplete:

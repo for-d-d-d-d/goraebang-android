@@ -24,4 +24,8 @@ public class CustomFragment extends Fragment {
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         // [END shared_tracker]
     }
+
+    protected void onClickFavorite(){
+
+    }
 }

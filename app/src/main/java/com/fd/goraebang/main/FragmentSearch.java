@@ -13,6 +13,7 @@ import com.fd.goraebang.song.ActivitySongDetail_;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.adapter.RecyclerAdapterSong;
+import com.fd.goraebang.util.listener.CallbackFavoriteListener;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -25,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 @EFragment(R.layout.fragment_tab_search)
-public class FragmentSearch extends CustomFragmentWithRecyclerView {
+public class FragmentSearch extends CustomFragmentWithRecyclerView implements CallbackFavoriteListener{
     private List<Song> items = null;
 
     public static FragmentSearch newInstance() {
@@ -44,7 +45,7 @@ public class FragmentSearch extends CustomFragmentWithRecyclerView {
         }
 
         if(adapter == null) {
-            adapter = new RecyclerAdapterSong(getActivity(), items);
+            adapter = new RecyclerAdapterSong(getActivity(), items, this);
         }
     }
 
@@ -127,5 +128,10 @@ public class FragmentSearch extends CustomFragmentWithRecyclerView {
         Intent intent = new Intent(getActivity(), ActivitySongDetail_.class);
         intent.putExtra("song", items.get(position));
         startActivityForResult(intent, CONST.RQ_CODE_SONG_DETAIL);
+    }
+
+    @Override
+    public void onClick(int viewId, int position) {
+
     }
 }

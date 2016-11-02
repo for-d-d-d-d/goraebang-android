@@ -1,6 +1,7 @@
 package com.fd.goraebang.main.setting;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.fd.goraebang.R;
 import com.fd.goraebang.custom.CustomActivityWithToolbar;
@@ -18,6 +19,13 @@ public class ActivityVersion extends CustomActivityWithToolbar{
     @AfterViews
     void afterViews(){
         setToolbar("버전", 0, R.drawable.ic_arrow_back_white_24dp, 0, 0);
+    }
 
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnLeft:
+                finish();
+                break;
+        }
     }
 }
