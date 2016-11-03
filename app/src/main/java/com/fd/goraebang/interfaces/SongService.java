@@ -40,14 +40,14 @@ public interface SongService {
     Call<List<Song>> getSearchByFilter(@Query("mytoken") String mytoken, @Query("query") String query, @Query("genre") String genre, @Query("age") String age, @Query("gender") String gender, @Query("page") int page);
 
     @GET("mySong_create")
-    Call<Song> insertMyListSong(@Query("id") String id, @Query("myList_id") String myList_id, @Query("song_id") String song_id);
+    Call<Song> createMyListSong(@Query("id") String id, @Query("myList_id") String myList_id, @Query("song_id") int song_id);
 
     @GET("mySong_delete")
-    Call<Song> deleteMyListSong(@Query("id") String id, @Query("mySong_id") String mySong_id);
+    Call<Song> deleteMyListSong(@Query("id") String id, @Query("song_id") int song_id);
 
     @GET("blacklist_song_create")
-    Call<Song> insertBlacklistSong(@Query("id") String id, @Query("song_id") String song_id);
+    Call<Song> createBlacklistSong(@Query("id") String id, @Query("song_id") int song_id);
 
     @GET("blacklist_song_delete")
-    Call<Song> deleteBlacklistSong(@Query("id") String id, @Query("blacklist_songs_id") String blacklist_songs_id);
+    Call<Song> deleteBlacklistSong(@Query("id") String id, @Query("song_id") int song_id);
 }

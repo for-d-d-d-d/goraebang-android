@@ -106,6 +106,7 @@ public class ActivityMain extends CustomActivityWithToolbar {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     AppController.USER = response.body();
+                    AppController.USER.setMyListId("115");
                 }
                 onComplete();
             }

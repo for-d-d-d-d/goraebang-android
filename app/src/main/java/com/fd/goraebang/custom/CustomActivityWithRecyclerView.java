@@ -95,14 +95,14 @@ public abstract class CustomActivityWithRecyclerView extends CustomActivityWithT
         @Override
         public void onRefresh() {
             mOnScrollListener.reset();
-            this.onRefresh();
+            CustomActivityWithRecyclerView.this.onRefresh();
         }
     }
 
     private class OnItemClickListener extends RecyclerItemClickListener.SimpleOnItemClickListener{
         @Override
         public void onItemClick(View view, int position) {
-            this.onItemClick(view, position);
+            CustomActivityWithRecyclerView.this.onItemClick(view, position);
         }
     }
 }

@@ -43,10 +43,30 @@ public class Song extends Default implements Serializable {
     private String songNum;
     @JsonProperty("release")
     private String release;
+    @JsonProperty("mySongId")
+    private String mySongId;
+    @JsonProperty("blacklist_song_id")
+    private String blacklist_song_id;
     @JsonProperty("mylist_count")
     private int cntFavorite;
     @JsonProperty("is_my_favorite")
     private boolean isFavorite;
+
+    public String getBlacklist_song_id() {
+        return blacklist_song_id;
+    }
+
+    public void setBlacklist_song_id(String blacklist_song_id) {
+        this.blacklist_song_id = blacklist_song_id;
+    }
+
+    public String getMySongId() {
+        return mySongId;
+    }
+
+    public void setMySongId(String mySongId) {
+        this.mySongId = mySongId;
+    }
 
     public int getId() {
         return id;

@@ -9,8 +9,10 @@ import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomFragmentWithRecyclerView;
 import com.fd.goraebang.model.Song;
 import com.fd.goraebang.song.ActivitySongDetail_;
+import com.fd.goraebang.song.SongFavoriteController;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.CallUtils;
+import com.fd.goraebang.util.CustomAlertDialog;
 import com.fd.goraebang.util.adapter.RecyclerAdapterSong;
 import com.fd.goraebang.util.listener.CallbackFavoriteListener;
 
@@ -24,8 +26,10 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 @EFragment(R.layout.fragment_tab_recommend)
-public class FragmentRecommend extends CustomFragmentWithRecyclerView  implements CallbackFavoriteListener{
+public class FragmentRecommend extends CustomFragmentWithRecyclerView  implements CallbackFavoriteListener {
     private List<Song> items = null;
+    private CustomAlertDialog mCustomAlertDialog;
+    private SongFavoriteController songFavoriteController;
 
     public static FragmentRecommend newInstance() {
         FragmentRecommend f = new FragmentRecommend_();
@@ -35,6 +39,8 @@ public class FragmentRecommend extends CustomFragmentWithRecyclerView  implement
     @Override
     public void onCreate(Bundle savedInstanceState) {
         isShowDivider = true;
+        isAddDefaultOnItemTouchListener = false;
+
         super.onCreate(savedInstanceState);
 
         if(items == null){
@@ -43,6 +49,10 @@ public class FragmentRecommend extends CustomFragmentWithRecyclerView  implement
 
         if(adapter == null) {
             adapter = new RecyclerAdapterSong(getActivity(), items, this);
+        }
+
+        if(songFavoriteController == null){
+            songFavoriteController = new SongFavoriteController(getActivity(), items, this);
         }
     }
 
@@ -99,7 +109,18 @@ public class FragmentRecommend extends CustomFragmentWithRecyclerView  implement
         });
     }
 
-    void updateView(){
+    @Override
+    protected void onRefresh() {
+        loadData(0);
+    }
+
+    @Override
+    protected void onItemClick(View view, int position) {
+        return;
+    }
+
+    @Override
+    public void updateView(){
         setMessage("");
         adapter.notifyDataSetChanged();
         if(items.size() == 0){
@@ -108,22 +129,26 @@ public class FragmentRecommend extends CustomFragmentWithRecyclerView  implement
     }
 
     @Override
-    protected void onRefresh() {
-        loadData(0);
-    }
-
-    @Override
-    protected void onItemClick(View view, int position) {
-        if(items.size() < position)
-            return;
-
-        Intent intent = new Intent(getActivity(), ActivitySongDetail_.class);
-        intent.putExtra("song", items.get(position));
-        startActivityForResult(intent, CONST.RQ_CODE_SONG_DETAIL);
-    }
-
-    @Override
     public void onClick(int viewId, int position) {
+        if(items.size() < position){
+            return;
+        }
 
+        switch (viewId){
+            case CONST.LONG_CLICK_LISTENER:
+                songFavoriteController.isCreateBlacklist(position);
+                break;
+            case R.id.btnBox:
+                if(items.get(position).isFavorite()){
+                    songFavoriteController.deleteFavorite(position);
+                }else{
+                    songFavoriteController.createFavorite(position);
+                }
+                break;
+            default:
+                Intent intent = new Intent(getActivity(), ActivitySongDetail_.class);
+                intent.putExtra("song", items.get(position));
+                startActivityForResult(intent, CONST.RQ_CODE_SONG_DETAIL);
+        }
     }
 }

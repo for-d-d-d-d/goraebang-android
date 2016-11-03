@@ -187,7 +187,6 @@ public class ActivitySearch extends CustomActivityWithToolbar {
                         Log.d("aaaaaa","aaa : " + which);
                     }
                 });
-        
         builder.show();
     }
 
