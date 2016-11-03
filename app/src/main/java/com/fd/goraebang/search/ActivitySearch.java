@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -61,6 +60,14 @@ public class ActivitySearch extends CustomActivityWithToolbar {
     private Timer timer = new Timer();
     private final long DELAY = 700;
 
+    private String filterGenre = null;
+    private String filterAge = null;
+    private String filterGender = null;
+    private String displayGenre = null;
+    private String displayAge = null;
+    private String displayGender = null;
+
+
     @AfterViews
     void afterViews(){
         setToolbar("검색", 0, R.drawable.ic_arrow_back_white_24dp, R.drawable.ic_local_bar_white_24dp, 0);
@@ -105,9 +112,9 @@ public class ActivitySearch extends CustomActivityWithToolbar {
         recyclerView.setVisibility(View.GONE);
         items.clear();
 
-        ((FragmentSearchList)adapter.getItem(0)).searchKeyword(keyword);
-        ((FragmentSearchList)adapter.getItem(1)).searchKeyword(keyword);
-        ((FragmentSearchList)adapter.getItem(2)).searchKeyword(keyword);
+        ((FragmentSearchList)adapter.getItem(0)).searchKeyword(keyword, filterGenre, filterAge, filterGender);
+        ((FragmentSearchList)adapter.getItem(1)).searchKeyword(keyword, filterGenre, filterAge, filterGender);
+        ((FragmentSearchList)adapter.getItem(2)).searchKeyword(keyword, filterGenre, filterAge, filterGender);
 
         Utils.hideSoftKeyboard(this);
 
@@ -178,17 +185,110 @@ public class ActivitySearch extends CustomActivityWithToolbar {
     }
 
     private void openFilter(){
-        String filters[] = {"장르별", "연도별", "성별"};
+        String filters[] = {
+                "장르별",
+                "연도별",
+                "성별"
+        };
+
+        if(displayGenre != null){
+            filters[0] = filters[0] + " : " + displayGenre;
+        }
+
+        if(displayAge != null){
+            filters[1] = filters[1] + " : " + displayAge;
+        }
+
+        if(displayGender != null){
+            filters[2] = filters[2] + " : " + displayGender;
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("조건 검색")
                 .setItems(filters, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d("aaaaaa","aaa : " + which);
+                        if(which == 0){
+                            openFilterGenre();
+                        }else if(which ==1){
+                            openFilterAge();
+                        }else if(which == 2){
+                            openFilterGender();
+                        }
                     }
                 });
         builder.show();
     }
+
+    private void openFilterGenre(){
+        final String values[] = {
+                "가요", "댄스", "전체", "락", "OST", "발라드", "R&B/소울", "인디",
+                "POP", "랩/힙합", "드라마", "트로트", "블루스/포크", "팝", "월드뮤직",
+                "재즈", "애시드/퓨전", "블루스/포크/컨트리", "해외영화", "일렉트로니카", "한국영화", "정통", "그외장르",
+                "캐롤", "J-POP", "애니메이션/게임", "국악", "동요/태교", "동요", "중국음악"
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("장르 선택")
+                .setItems(values, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        filterGenre = values[which];
+                        displayGenre = values[which];
+                    }
+                });
+        builder.show();
+    }
+    private void openFilterAge(){
+        final String display[] = {
+                "그 이전",
+                "7080",
+                "90년대",
+                "2001 ~ 2005",
+                "2006 ~ 2010",
+                "2011 ~ 최신"
+        };
+        final String values[] = {
+                "1969",
+                "1970",
+                "1990",
+                "2001",
+                "2006",
+                "2011"
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("연도 선택")
+                .setItems(display, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        filterAge = values[which];
+                        displayAge = display[which];
+                    }
+                });
+        builder.show();
+    }
+
+    private void openFilterGender(){
+        final String display[] = {
+                "남성",
+                "여성",
+                "혼성"
+        };
+        final String values[] = {
+                "1",
+                "2",
+                "3"
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("성별 선택")
+                .setItems(display, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        filterGender = values[which];
+                        displayGender = display[which];
+                    }
+                });
+        builder.show();
+    }
+
 
     private class SwipeRefreshListener implements SwipeRefreshLayout.OnRefreshListener{
         @Override

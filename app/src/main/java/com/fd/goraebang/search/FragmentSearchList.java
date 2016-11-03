@@ -31,6 +31,10 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView implement
     private String type = null;
     private SongFavoriteController songFavoriteController;
 
+    private String filterGenre = null;
+    private String filterAge = null;
+    private String filterGender = null;
+
     public static FragmentSearchList newInstance(String type, String keyword) {
         FragmentSearchList f = new FragmentSearchList_();
         Bundle b = new Bundle();
@@ -87,7 +91,7 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView implement
             items.clear();
         }
 
-        Call<List<Song>> call = AppController.getSongService().getSearch(AppController.USER_TOKEN, keyword, type.toLowerCase(), page);
+        Call<List<Song>> call = AppController.getSongService().getSearch(AppController.USER_TOKEN, keyword, type.toLowerCase(), filterGenre, filterAge, filterGender, page);
         call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
@@ -110,8 +114,12 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView implement
         });
     }
 
-    protected void searchKeyword(String keyword){
-        items.clear();
+    protected void searchKeyword(String keyword, String genre, String age, String gender){
+        this.items.clear();
+
+        this.filterGenre = genre;
+        this.filterAge = age;
+        this.filterGender = gender;
         this.keyword = keyword;
 
         loadData(0);
