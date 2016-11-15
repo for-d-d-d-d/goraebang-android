@@ -1,7 +1,6 @@
 package com.fd.goraebang.song;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 
 import com.fd.goraebang.R;
@@ -33,10 +32,10 @@ public class SongFavoriteController {
             return;
         }
 
-        Call<Song> call = AppController.getSongService().deleteMyListSong(AppController.USER_ID, items.get(position).getId());
-        call.enqueue(new CallUtils<Song>(call, mContext, mContext.getResources().getString(R.string.msgErrorCommon)) {
+        Call<List<Song>> call = AppController.getSongService().deleteMyListSong(AppController.USER_ID, items.get(position).getId());
+        call.enqueue(new CallUtils<List<Song>>(call, mContext, mContext.getResources().getString(R.string.msgErrorCommon)) {
             @Override
-            public void onResponse(Call<Song> call, Response<Song> response) {
+            public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
                 if (response.isSuccessful()) {
                     items.get(position).setFavorite(false);
                     items.get(position).setCntFavorite(items.get(position).getCntFavorite() - 1);
@@ -44,7 +43,7 @@ public class SongFavoriteController {
                 }
             }
             @Override
-            public void onFailure(Call<Song> call, Throwable t) {
+            public void onFailure(Call<List<Song>> call, Throwable t) {
 
             }
         });
@@ -135,17 +134,17 @@ public class SongFavoriteController {
     }
 
     public void deleteBlacklist(final int position){
-        Call<Song> call = AppController.getSongService().deleteBlacklistSong(AppController.USER_ID, items.get(position).getId());
-        call.enqueue(new CallUtils<Song>(call, mContext, mContext.getResources().getString(R.string.msgErrorCommon)) {
+        Call<List<Song>> call = AppController.getSongService().deleteBlacklistSong(AppController.USER_ID, items.get(position).getId());
+        call.enqueue(new CallUtils<List<Song>>(call, mContext, mContext.getResources().getString(R.string.msgErrorCommon)) {
             @Override
-            public void onResponse(Call<Song> call, Response<Song> response) {
+            public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
                 if (response.isSuccessful()) {
                     items.remove(position);
                     mListener.updateView();
                 }
             }
             @Override
-            public void onFailure(Call<Song> call, Throwable t) {
+            public void onFailure(Call<List<Song>> call, Throwable t) {
 
             }
         });

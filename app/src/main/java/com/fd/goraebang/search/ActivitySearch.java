@@ -221,7 +221,7 @@ public class ActivitySearch extends CustomActivityWithToolbar {
 
     private void openFilterGenre(){
         final String values[] = {
-                "가요", "댄스", "전체", "락", "OST", "발라드", "R&B/소울", "인디",
+                "선택 안함", "가요", "댄스", "전체", "락", "OST", "발라드", "R&B/소울", "인디",
                 "POP", "랩/힙합", "드라마", "트로트", "블루스/포크", "팝", "월드뮤직",
                 "재즈", "애시드/퓨전", "블루스/포크/컨트리", "해외영화", "일렉트로니카", "한국영화", "정통", "그외장르",
                 "캐롤", "J-POP", "애니메이션/게임", "국악", "동요/태교", "동요", "중국음악"
@@ -231,14 +231,20 @@ public class ActivitySearch extends CustomActivityWithToolbar {
         builder.setTitle("장르 선택")
                 .setItems(values, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        filterGenre = values[which];
-                        displayGenre = values[which];
+                        if(values[which].equals("선택 안함")){
+                            filterGenre = null;
+                            displayGenre = null;
+                        }else {
+                            filterGenre = values[which];
+                            displayGenre = values[which];
+                        }
                     }
                 });
         builder.show();
     }
     private void openFilterAge(){
         final String display[] = {
+                "선택 안함",
                 "그 이전",
                 "7080",
                 "90년대",
@@ -247,6 +253,7 @@ public class ActivitySearch extends CustomActivityWithToolbar {
                 "2011 ~ 최신"
         };
         final String values[] = {
+                null,
                 "1969",
                 "1970",
                 "1990",
@@ -268,11 +275,13 @@ public class ActivitySearch extends CustomActivityWithToolbar {
 
     private void openFilterGender(){
         final String display[] = {
+                "선택 안함",
                 "남성",
                 "여성",
                 "혼성"
         };
         final String values[] = {
+                null,
                 "1",
                 "2",
                 "3"

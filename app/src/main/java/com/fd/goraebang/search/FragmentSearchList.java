@@ -91,7 +91,15 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView implement
             items.clear();
         }
 
-        Call<List<Song>> call = AppController.getSongService().getSearch(AppController.USER_TOKEN, keyword, type.toLowerCase(), filterGenre, filterAge, filterGender, page);
+        Call<List<Song>> call = null;
+
+        // filter가 선택되지 않으면 search_by, 하나라도 선택되면 filter_by 호출. (용현님의 부탁)
+        if(filterGenre == null && filterAge == null && filterGender == null){
+            call = AppController.getSongService().getSearch(AppController.USER_TOKEN, keyword, type.toLowerCase(), filterGenre, filterAge, filterGender, page);
+        }else{
+            call = AppController.getSongService().getSearchByFilter(AppController.USER_TOKEN, keyword, type.toLowerCase(), filterGenre, filterAge, filterGender, page);
+        }
+
         call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
