@@ -9,6 +9,7 @@ import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomFragmentWithRecyclerView;
 import com.fd.goraebang.model.Song;
 import com.fd.goraebang.song.ActivitySongDetail_;
+import com.fd.goraebang.song.SongFavoriteController;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.adapter.RecyclerAdapterSong;
@@ -28,6 +29,11 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView implement
     private List<Song> items = new ArrayList<>();
     private String keyword = null;
     private String type = null;
+    private SongFavoriteController songFavoriteController;
+
+    private String filterGenre = null;
+    private String filterAge = null;
+    private String filterGender = null;
 
     public static FragmentSearchList newInstance(String type, String keyword) {
         FragmentSearchList f = new FragmentSearchList_();
@@ -40,6 +46,7 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView implement
 
     @Override
     public void onCreate(Bundle savedInstanceState){
+        isAddDefaultOnItemTouchListener = false;
         type = getArguments().getString("type");
         keyword = getArguments().getString("keyword");
 
@@ -47,6 +54,10 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView implement
 
         if(adapter == null) {
             adapter = new RecyclerAdapterSong(getActivity(), items, this);
+        }
+
+        if(songFavoriteController == null){
+            songFavoriteController = new SongFavoriteController(getActivity(), items, this);
         }
     }
 
@@ -80,7 +91,15 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView implement
             items.clear();
         }
 
-        Call<List<Song>> call = AppController.getSongService().getSearch(AppController.USER_TOKEN, keyword, type.toLowerCase(), page);
+        Call<List<Song>> call = null;
+
+        // filter가 선택되지 않으면 search_by, 하나라도 선택되면 filter_by 호출. (용현님의 부탁)
+        if(filterGenre == null && filterAge == null && filterGender == null){
+            call = AppController.getSongService().getSearch(AppController.USER_TOKEN, keyword, type.toLowerCase(), filterGenre, filterAge, filterGender, page);
+        }else{
+            call = AppController.getSongService().getSearchByFilter(AppController.USER_TOKEN, keyword, type.toLowerCase(), filterGenre, filterAge, filterGender, page);
+        }
+
         call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
@@ -103,14 +122,19 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView implement
         });
     }
 
-    protected void searchKeyword(String keyword){
-        items.clear();
+    protected void searchKeyword(String keyword, String genre, String age, String gender){
+        this.items.clear();
+
+        this.filterGenre = genre;
+        this.filterAge = age;
+        this.filterGender = gender;
         this.keyword = keyword;
 
         loadData(0);
     }
 
-    void updateView(){
+    @Override
+    public void updateView(){
         setMessage("");
         adapter.notifyDataSetChanged();
 
@@ -128,16 +152,30 @@ public class FragmentSearchList extends CustomFragmentWithRecyclerView implement
 
     @Override
     protected void onItemClick(View view, int position) {
-        if(items.size() < position)
-            return;
-
-        Intent intent = new Intent(getActivity(), ActivitySongDetail_.class);
-        intent.putExtra("song", items.get(position));
-        startActivityForResult(intent, CONST.RQ_CODE_SONG_DETAIL);
+        return;
     }
 
     @Override
     public void onClick(int viewId, int position) {
+        if(items.size() < position){
+            return;
+        }
 
+        switch (viewId){
+            case CONST.LONG_CLICK_LISTENER:
+                songFavoriteController.isCreateBlacklist(position);
+                break;
+            case R.id.btnBox:
+                if(items.get(position).isFavorite()){
+                    songFavoriteController.deleteFavorite(position);
+                }else{
+                    songFavoriteController.createFavorite(position);
+                }
+                break;
+            default:
+                Intent intent = new Intent(getActivity(), ActivitySongDetail_.class);
+                intent.putExtra("song", items.get(position));
+                startActivityForResult(intent, CONST.RQ_CODE_SONG_DETAIL);
+        }
     }
 }

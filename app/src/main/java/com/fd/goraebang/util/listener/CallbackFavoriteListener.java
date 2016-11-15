@@ -6,4 +6,5 @@ package com.fd.goraebang.util.listener;
 
 public interface CallbackFavoriteListener {
     public void onClick(int viewId, int position);
+    public void updateView();
 }

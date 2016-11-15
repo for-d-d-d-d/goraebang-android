@@ -6,6 +6,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,7 +33,7 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
         public final TextView tvLyrics;
         public final TextView tvRelease;
         public final ImageView iv;
-        public final ImageView ivBox;
+        public final ImageButton btnBox;
         public final ImageView ivBoxSmall;
 
         public ViewHolder(View view) {
@@ -45,7 +46,7 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
             tvCntFavorite = (TextView) view.findViewById(R.id.tvCntFavorite);
             tvTjnum = (TextView) view.findViewById(R.id.tvTjnum);
             iv = (ImageView) view.findViewById(R.id.iv);
-            ivBox = (ImageView) view.findViewById(R.id.ivBox);
+            btnBox = (ImageButton) view.findViewById(R.id.btnBox);
             ivBoxSmall = (ImageView) view.findViewById(R.id.ivBoxSmall);
         }
     }
@@ -82,17 +83,25 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
         }
 
         if (item.isFavorite()) {
-            holder.ivBox.setImageResource(R.drawable.ic_box_on);
+            holder.btnBox.setImageResource(R.drawable.ic_box_on);
             holder.ivBoxSmall.setImageResource(R.drawable.ic_box_on);
         } else {
-            holder.ivBox.setImageResource(R.drawable.ic_box_off);
+            holder.btnBox.setImageResource(R.drawable.ic_box_off);
             holder.ivBoxSmall.setImageResource(R.drawable.ic_box_off);
         }
 
         holder.tvTjnum.setText(item.getSongTjnum());
         Glide.with(mContext).load(item.getJacketSmall()).into(holder.iv);
 
-        holder.ivBox.setOnClickListener(new View.OnClickListener() {
+        holder.btnBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mListener != null)
+                    mListener.onClick(v.getId(), position);
+            }
+        });
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mListener != null)

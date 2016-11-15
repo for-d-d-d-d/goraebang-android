@@ -3,6 +3,7 @@ package com.fd.goraebang.song;
 import android.content.Intent;
 import android.text.Html;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,9 @@ public class ActivitySongDetail extends CustomActivityWithToolbar {
     @ViewById
     ImageView iv;
 
+    @ViewById
+    ImageButton btnBox;
+
     private Song item = null;
 
     @AfterViews
@@ -37,6 +41,12 @@ public class ActivitySongDetail extends CustomActivityWithToolbar {
         tvLyrics.setText(Html.fromHtml(item.getLyrics()));
         tvCntFavorite.setText(item.getCntFavorite() + "");
         Glide.with(this).load(item.getJacketSmall()).into(iv);
+
+        if(item.isFavorite()){
+            btnBox.setImageResource(R.drawable.ic_box_on);
+        }else{
+            btnBox.setImageResource(R.drawable.ic_box_off);
+        }
     }
 
 

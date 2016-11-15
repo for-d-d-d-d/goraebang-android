@@ -63,7 +63,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingTop="2dp"
-                android:paddingRight="5dp"
                 android:gravity="center_horizontal">
                 <TextView
                     android:id="@+id/tvCntFavorite"
@@ -73,16 +72,19 @@
                     android:background="@color/colorPrimary"
                     android:textSize="@dimen/text_size_light"
                     android:paddingLeft="3dp"
-                    android:paddingRight="3dp"/>
+                    android:paddingRight="3dp"
+                    android:layout_marginRight="5dp" />
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
-                <ImageView
-                    android:id="@+id/ivBox"
+                <ImageButton
+                    android:id="@+id/btnBox"
                     android:src="@drawable/ic_box_off"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@color/transparent"
                     android:layout_gravity="bottom"/>
             </LinearLayout>
         </LinearLayout>

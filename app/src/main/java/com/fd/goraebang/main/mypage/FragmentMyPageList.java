@@ -9,6 +9,7 @@ import com.fd.goraebang.consts.CONST;
 import com.fd.goraebang.custom.CustomFragmentWithRecyclerView;
 import com.fd.goraebang.model.Song;
 import com.fd.goraebang.song.ActivitySongDetail_;
+import com.fd.goraebang.song.SongFavoriteController;
 import com.fd.goraebang.util.AppController;
 import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.adapter.RecyclerAdapterSong;
@@ -28,6 +29,7 @@ public class FragmentMyPageList extends CustomFragmentWithRecyclerView implement
     private List<Song> items = null;
     private String type = null;
     private String emptyMessage = null;
+    private SongFavoriteController songFavoriteController;
 
     public static FragmentMyPageList newInstance(String type) {
         FragmentMyPageList f = new FragmentMyPageList_();
@@ -39,6 +41,8 @@ public class FragmentMyPageList extends CustomFragmentWithRecyclerView implement
 
     @Override
     public void onCreate(Bundle savedInstanceState){
+        isAddDefaultOnItemTouchListener = false;
+
         super.onCreate(savedInstanceState);
 
         type = getArguments().getString("type");
@@ -49,6 +53,10 @@ public class FragmentMyPageList extends CustomFragmentWithRecyclerView implement
 
         if(adapter == null) {
             adapter = new RecyclerAdapterSong(getActivity(), items, this);
+        }
+
+        if(songFavoriteController == null){
+            songFavoriteController = new SongFavoriteController(getActivity(), items, this);
         }
     }
 
@@ -115,7 +123,8 @@ public class FragmentMyPageList extends CustomFragmentWithRecyclerView implement
         });
     }
 
-    void updateView(){
+    @Override
+    public void updateView(){
         setMessage("");
         adapter.notifyDataSetChanged();
 
@@ -133,16 +142,34 @@ public class FragmentMyPageList extends CustomFragmentWithRecyclerView implement
 
     @Override
     protected void onItemClick(View view, int position) {
-        if(items.size() < position)
-            return;
-
-        Intent intent = new Intent(getActivity(), ActivitySongDetail_.class);
-        intent.putExtra("song", items.get(position));
-        startActivityForResult(intent, CONST.RQ_CODE_SONG_DETAIL);
+        return;
     }
 
     @Override
     public void onClick(int viewId, int position) {
+        if(items.size() < position){
+            return;
+        }
 
+        switch (viewId){
+            case CONST.LONG_CLICK_LISTENER:
+                if (type.equals("BLACKLIST")) {
+                    songFavoriteController.isDeleteBlacklist(position);
+                } else {
+                    songFavoriteController.isCreateBlacklist(position);
+                }
+                break;
+            case R.id.btnBox:
+                if(items.get(position).isFavorite()){
+                    songFavoriteController.deleteFavorite(position);
+                }else{
+                    songFavoriteController.createFavorite(position);
+                }
+                break;
+            default:
+                Intent intent = new Intent(getActivity(), ActivitySongDetail_.class);
+                intent.putExtra("song", items.get(position));
+                startActivityForResult(intent, CONST.RQ_CODE_SONG_DETAIL);
+        }
     }
 }
