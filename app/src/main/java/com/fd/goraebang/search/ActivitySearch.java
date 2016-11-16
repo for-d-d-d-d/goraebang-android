@@ -127,13 +127,6 @@ public class ActivitySearch extends CustomActivityWithToolbar {
     @UiThread
     void loadKeywords(){
         items.clear();
-        swipeRefreshLayout.setEnabled(true);
-        swipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(true);
-            }
-        });
 
         String keyword = etSearch.getText().toString();
         Call<List<HashMap<String, ArrayList<String>>>> call = AppController.getSongService().getSearchByAutoComplete(AppController.USER_TOKEN, keyword, "title", 0, true);
@@ -166,8 +159,6 @@ public class ActivitySearch extends CustomActivityWithToolbar {
 
             @Override
             public void onComplete() {
-                swipeRefreshLayout.setEnabled(false);
-                swipeRefreshLayout.setRefreshing(false);
                 updateView();
             }
         });

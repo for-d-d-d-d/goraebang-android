@@ -84,10 +84,8 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
 
         if (item.isFavorite()) {
             holder.btnBox.setImageResource(R.drawable.ic_box_on);
-            holder.ivBoxSmall.setImageResource(R.drawable.ic_box_on);
         } else {
             holder.btnBox.setImageResource(R.drawable.ic_box_off);
-            holder.ivBoxSmall.setImageResource(R.drawable.ic_box_off);
         }
 
         holder.tvTjnum.setText(item.getSongTjnum());

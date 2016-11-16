@@ -134,4 +134,20 @@ public class ActivityNewChart extends CustomActivityWithRecyclerView implements 
                 startActivityForResult(intent, CONST.RQ_CODE_SONG_DETAIL);
         }
     }
+
+    public void onClick(View v) {
+        Intent intent = null;
+
+        switch(v.getId()){
+            case R.id.btnLeft:
+                finish();
+                break;
+            default :
+                break;
+        }
+
+        if(intent != null) {
+            startActivity(intent);
+        }
+    }
 }

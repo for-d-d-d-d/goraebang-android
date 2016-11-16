@@ -1,6 +1,7 @@
 package com.fd.goraebang.song;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import com.fd.goraebang.R;
@@ -10,6 +11,7 @@ import com.fd.goraebang.util.CallUtils;
 import com.fd.goraebang.util.CustomAlertDialog;
 import com.fd.goraebang.util.listener.CallbackFavoriteListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -20,6 +22,13 @@ public class SongFavoriteController {
     private List<Song> items = null;
     private Context mContext;
     private CallbackFavoriteListener mListener;
+
+    public SongFavoriteController(Context context, Song item, CallbackFavoriteListener listener) {
+        this.items = new ArrayList<>();
+        this.items.add(item);
+        this.mContext = context;
+        this.mListener = listener;
+    }
 
     public SongFavoriteController(Context context, List<Song> items, CallbackFavoriteListener listener) {
         this.items = items;
