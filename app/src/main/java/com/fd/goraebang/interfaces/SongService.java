@@ -13,13 +13,13 @@ import retrofit2.http.Query;
 
 public interface SongService {
     @GET("top100")
-    Call<List<Song>> getTopChart(@Query("page") int page);
+    Call<List<Song>> getTopChart(@Query("mytoken") String mytoken,@Query("page") int page);
 
     @GET("main_banner")
     Call<List<Banner>> getMainBanner();
 
-    @GET("top100")
-    Call<List<Song>> getMainNewChart();
+    @GET("month_new")
+    Call<List<Song>> getMainNewChart(@Query("mytoken") String mytoken, @Query("page") int page);
 
     @GET("recom")
     Call<List<Song>> getMyPageAnalysis(@Query("id") String user_id, @Query("page") int page);
