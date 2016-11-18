@@ -69,7 +69,7 @@ public class ActivityNewChart extends CustomActivityWithRecyclerView implements 
         if(page == 0)
             items.clear();
 
-        Call<List<Song>> call = AppController.getSongService().getTopChart(page);
+        Call<List<Song>> call = AppController.getSongService().getMainNewChart(AppController.USER_TOKEN, page);
         call.enqueue(new CallUtils<List<Song>>(call, this, getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {

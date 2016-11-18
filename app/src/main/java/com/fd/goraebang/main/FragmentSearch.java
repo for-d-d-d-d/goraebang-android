@@ -92,7 +92,7 @@ public class FragmentSearch extends CustomFragmentWithRecyclerView implements Ca
         if(page == 0)
             items.clear();
 
-        Call<List<Song>> call = AppController.getSongService().getTopChart(page);
+        Call<List<Song>> call = AppController.getSongService().getTopChart(AppController.USER_TOKEN, page);
         call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {

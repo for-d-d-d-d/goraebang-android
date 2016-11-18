@@ -90,7 +90,7 @@ public class FragmentMyPageList extends CustomFragmentWithRecyclerView implement
 
         if(type.equals("ANALYSIS")){
             emptyMessage = "취향분석 데이터가 없습니다.";
-            call = AppController.getSongService().getMyPageAnalysis(AppController.USER_ID, page);
+            call = AppController.getSongService().getTopChart(AppController.USER_TOKEN, page);
         }else if(type.equals("FAVORITE")){
             emptyMessage = "마이리스트가 비어 있습니다.";
             call = AppController.getSongService().getMyPageFavorite(AppController.USER_ID, AppController.USER_MY_LIST_ID, page);
