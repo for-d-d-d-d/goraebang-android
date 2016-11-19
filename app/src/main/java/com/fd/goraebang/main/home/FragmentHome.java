@@ -104,7 +104,7 @@ public class FragmentHome extends CustomFragment {
 
         if(itemsTopChart.size() == 0) {
             // Top Chart
-            Call<List<Song>> call = AppController.getSongService().getTopChart("", 0);
+            Call<List<Song>> call = AppController.getSongService().getTopChart(AppController.USER_TOKEN, 0);
             call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
                 @Override
                 public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
@@ -128,7 +128,7 @@ public class FragmentHome extends CustomFragment {
 
         if(itemsNewChart.size() == 0) {
             // New Chart
-            Call<List<Song>> call = AppController.getSongService().getMainNewChart("", 0);
+            Call<List<Song>> call = AppController.getSongService().getMainNewChart(AppController.USER_TOKEN, 0);
             call.enqueue(new CallUtils<List<Song>>(call, getActivity(), getResources().getString(R.string.msgErrorCommon)) {
                 @Override
                 public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
