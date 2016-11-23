@@ -2,6 +2,7 @@ package com.fd.goraebang.main.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.widget.LinearLayout;
 
@@ -74,6 +75,13 @@ public class FragmentHome extends CustomFragment {
         updateViewBanner();
         updateViewTopChart();
         updateViewNewChart();
+
+        scrollViewBanner();
+    }
+
+    public void handleMessage(android.os.Message msg) {
+        int page_num=msg.what;
+        viewPagerBanner.setCurrentItem(page_num);
     }
 
     private void loadData() {
@@ -210,6 +218,34 @@ public class FragmentHome extends CustomFragment {
         dialog = Utils.hideDialog(dialog);
     }
 
+    private void scrollViewBanner(){
+        final Handler handler = new Handler(){
+            public void handleMessage(android.os.Message msg) {
+                int page_num=msg.what;
+                viewPagerBanner.setCurrentItem(page_num);
+            }
+        };
+        Thread thread = new Thread(){
+            //run은 jvm이 쓰레드를 채택하면, 해당 쓰레드의 run메서드를 수행한다.
+            public void run() {
+                int page_num=0;
+                super.run();
+                while(true){
+                    try {
+                        Thread.sleep(4000);
+                        handler.sendEmptyMessage(page_num);
+                        if(page_num==adapterBanner.getCount()) page_num=0;
+                        else page_num++;
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        thread.start();
+    }
+
     @Click(R.id.llTopChart)
     void onClickTopChart(){
         startActivity(new Intent(getActivity(), ActivityTopChart_.class));
@@ -219,4 +255,6 @@ public class FragmentHome extends CustomFragment {
     void onClickNewChart(){
         startActivity(new Intent(getActivity(), ActivityNewChart_.class));
     }
+
+
 }
