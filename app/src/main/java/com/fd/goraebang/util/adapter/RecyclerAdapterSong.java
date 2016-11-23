@@ -89,7 +89,7 @@ public class RecyclerAdapterSong extends RecyclerView.Adapter<RecyclerAdapterSon
         }
 
         holder.tvTjnum.setText(item.getSongTjnum());
-        Glide.with(mContext).load(item.getJacketSmall()).into(holder.iv);
+        Glide.with(mContext).load(item.getJacket()).into(holder.iv);
 
         holder.btnBox.setOnClickListener(new View.OnClickListener() {
             @Override

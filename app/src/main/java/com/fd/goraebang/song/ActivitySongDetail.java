@@ -43,7 +43,7 @@ public class ActivitySongDetail extends CustomActivityWithToolbar implements Cal
         tvArtist.setText(item.getArtistName());
         tvLyrics.setText(Html.fromHtml(item.getLyrics()));
         tvTjnum.setText(item.getSongTjnum() + "");
-        Glide.with(this).load(item.getJacketSmall()).into(iv);
+        Glide.with(this).load(item.getJacket()).into(iv);
 
         updateView();
 
