@@ -38,6 +38,9 @@ public class FragmentHome extends CustomFragment {
     @ViewById
     CircleIndicator indicatorBanner, indicatorTopChart, indicatorNewChart;
 
+    Handler homeBannerHandler;
+    Thread autoScrollThread;
+
     private List<Banner> itemsBanner = null;
     private ArrayList<Song> itemsTopChart = null;
     private ArrayList<Song> itemsNewChart = null;
@@ -214,21 +217,20 @@ public class FragmentHome extends CustomFragment {
     }
 
     private void scrollViewBanner(){
-        final Handler handler = new Handler(){
+        homeBannerHandler = new Handler(){
             public void handleMessage(android.os.Message msg) {
                 int page_num=msg.what;
                 viewPagerBanner.setCurrentItem(page_num);
             }
         };
-        Thread thread = new Thread(){
-            //run은 jvm이 쓰레드를 채택하면, 해당 쓰레드의 run메서드를 수행한다.
+        autoScrollThread = new Thread(){
             public void run() {
                 int page_num=0;
                 super.run();
                 while(true){
                     try {
                         Thread.sleep(4000);
-                        handler.sendEmptyMessage(page_num);
+                        homeBannerHandler.sendEmptyMessage(page_num);
                         if(page_num==adapterBanner.getCount()) page_num=0;
                         else page_num++;
                     } catch (InterruptedException e) {
@@ -238,7 +240,7 @@ public class FragmentHome extends CustomFragment {
                 }
             }
         };
-        thread.start();
+        autoScrollThread.start();
     }
 
     @Click(R.id.llTopChart)
