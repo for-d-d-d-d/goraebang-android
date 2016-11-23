@@ -79,11 +79,6 @@ public class FragmentHome extends CustomFragment {
         scrollViewBanner();
     }
 
-    public void handleMessage(android.os.Message msg) {
-        int page_num=msg.what;
-        viewPagerBanner.setCurrentItem(page_num);
-    }
-
     private void loadData() {
         dialog = Utils.createDialog(getActivity(), dialog);
         if(itemsBanner.size() == 0) {
