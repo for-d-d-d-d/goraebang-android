@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -293,7 +294,9 @@ public class ActivitySearch extends CustomActivityWithToolbar {
     private class SwipeRefreshListener implements SwipeRefreshLayout.OnRefreshListener{
         @Override
         public void onRefresh() {
+            // this.onRefresh();
             this.onRefresh();
+            Log.e("ActivitySearch", "onRefresh called");
         }
     }
     private class OnItemClickListener extends RecyclerItemClickListener.SimpleOnItemClickListener{
