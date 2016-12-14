@@ -93,7 +93,7 @@ public class FragmentMyPageList extends CustomFragmentWithRecyclerView implement
             call = AppController.getSongService().getTopChart(AppController.USER_TOKEN, page);
         }else if(type.equals("FAVORITE")){
             emptyMessage = "마이리스트가 비어 있습니다.";
-            call = AppController.getSongService().getMyPageFavorite(AppController.USER_ID, AppController.USER_MY_LIST_ID, page);
+            call = AppController.getSongService().getMyPageFavorite(AppController.USER_MY_LIST_ID, AppController.USER_ID, page);
         }else if(type.equals("BLACKLIST")){
             emptyMessage = "블랙리스트가 없습니다.";
             call = AppController.getSongService().getMyPageBlacklist(AppController.USER_ID, page);

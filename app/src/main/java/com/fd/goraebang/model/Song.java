@@ -43,7 +43,7 @@ public class Song extends Default implements Serializable {
     private String songNum;
     @JsonProperty("release")
     private String release;
-    @JsonProperty("mySongId")
+    @JsonProperty("mysong_id")
     private String mySongId;
     @JsonProperty("blacklist_song_id")
     private String blacklist_song_id;

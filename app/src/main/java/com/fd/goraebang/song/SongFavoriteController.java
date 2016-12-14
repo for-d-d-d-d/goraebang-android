@@ -41,7 +41,7 @@ public class SongFavoriteController {
             return;
         }
 
-        Call<List<Song>> call = AppController.getSongService().deleteMyListSong(AppController.USER_ID, items.get(position).getId());
+        Call<List<Song>> call = AppController.getSongService().deleteMyListSong(AppController.USER_MY_LIST_ID, items.get(position).getMySongId(), AppController.USER_ID, items.get(position).getId());
         call.enqueue(new CallUtils<List<Song>>(call, mContext, mContext.getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
@@ -63,7 +63,7 @@ public class SongFavoriteController {
             return;
         }
 
-        Call<Song> call = AppController.getSongService().createMyListSong(AppController.USER_ID, AppController.USER.getMyListId(), items.get(position).getId());
+        Call<Song> call = AppController.getSongService().createMyListSong(AppController.USER_MY_LIST_ID, AppController.USER_ID, items.get(position).getId());
         call.enqueue(new CallUtils<Song>(call, mContext, mContext.getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<Song> call, Response<Song> response) {
@@ -143,7 +143,7 @@ public class SongFavoriteController {
     }
 
     public void deleteBlacklist(final int position){
-        Call<List<Song>> call = AppController.getSongService().deleteBlacklistSong(AppController.USER_ID, items.get(position).getId());
+        Call<List<Song>> call = AppController.getSongService().deleteBlacklistSong(items.get(position).getId(), AppController.USER_ID);
         call.enqueue(new CallUtils<List<Song>>(call, mContext, mContext.getResources().getString(R.string.msgErrorCommon)) {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
